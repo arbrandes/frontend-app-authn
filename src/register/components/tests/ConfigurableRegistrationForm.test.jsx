@@ -41,8 +41,10 @@ jest.mock('react-router-dom', () => {
 
 describe('ConfigurableRegistrationForm', () => {
   mergeConfig({
-    PRIVACY_POLICY: 'https://privacy-policy.com',
-    TOS_AND_HONOR_CODE: 'https://tos-and-honot-code.com',
+    custom: {
+      PRIVACY_POLICY: 'https://privacy-policy.com',
+      TOS_AND_HONOR_CODE: 'https://tos-and-honot-code.com',
+    }
   });
 
   let props = {};
@@ -138,7 +140,9 @@ describe('ConfigurableRegistrationForm', () => {
 
   describe('Test Configurable Fields', () => {
     mergeConfig({
-      ENABLE_DYNAMIC_REGISTRATION_FIELDS: true,
+      custom: {
+        ENABLE_DYNAMIC_REGISTRATION_FIELDS: true,
+      }
     });
 
     it('should render fields returned by backend as field descriptions', () => {
@@ -218,7 +222,9 @@ describe('ConfigurableRegistrationForm', () => {
 
     it('should submit form with fields returned by backend in payload', () => {
       mergeConfig({
-        SHOW_CONFIGURABLE_EDX_FIELDS: true,
+        custom: {
+          SHOW_CONFIGURABLE_EDX_FIELDS: true,
+        }
       });
       getLocale.mockImplementation(() => ('en-us'));
       jest.spyOn(global.Date, 'now').mockImplementation(() => 0);

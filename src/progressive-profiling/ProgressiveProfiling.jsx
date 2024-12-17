@@ -59,7 +59,7 @@ const ProgressiveProfiling = (props) => {
   const authenticatedUser = getAuthenticatedUser() || location.state?.authenticatedUser;
   const functionalCookiesConsent = isOneTrustFunctionalCookieEnabled();
   const enablePostRegistrationRecommendations = (
-    getConfig().ENABLE_POST_REGISTRATION_RECOMMENDATIONS && functionalCookiesConsent
+    getConfig().custom.ENABLE_POST_REGISTRATION_RECOMMENDATIONS && functionalCookiesConsent
   );
 
   const [registrationResult, setRegistrationResult] = useState({ redirectUrl: '' });
@@ -93,7 +93,7 @@ const ProgressiveProfiling = (props) => {
         fields: welcomePageContext.fields,
         extendedProfile: welcomePageContext.extended_profile,
       });
-      const nextUrl = welcomePageContext.nextUrl ? welcomePageContext.nextUrl : getConfig().SEARCH_CATALOG_URL;
+      const nextUrl = welcomePageContext.nextUrl ? welcomePageContext.nextUrl : getConfig().custom.SEARCH_CATALOG_URL;
       setRegistrationResult({ redirectUrl: nextUrl });
     }
   }, [registrationEmbedded, welcomePageContext]);
@@ -239,12 +239,12 @@ const ProgressiveProfiling = (props) => {
             ) : null}
             <Form>
               {formFields}
-              {(getConfig().AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK) && (
+              {(getConfig().custom.AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK) && (
                 <span className="pp-page__support-link">
                   <Hyperlink
                     isInline
                     variant="muted"
-                    destination={getConfig().AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK}
+                    destination={getConfig().custom.AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK}
                     target="_blank"
                     showLaunchIcon={false}
                     onClick={() => (sendTrackEvent('edx.bi.welcome.page.support.link.clicked'))}

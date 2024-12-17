@@ -26,7 +26,9 @@ describe('Base component tests', () => {
 
   it('renders Image layout when ENABLE_IMAGE_LAYOUT configuration is enabled', () => {
     mergeConfig({
-      ENABLE_IMAGE_LAYOUT: true,
+      custom: {
+        ENABLE_IMAGE_LAYOUT: true,
+      }
     });
 
     const { container } = render(

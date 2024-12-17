@@ -102,7 +102,9 @@ describe('Logistration', () => {
 
   it('should render registration page', () => {
     mergeConfig({
+      custom: {
       ALLOW_PUBLIC_ACCOUNT_CREATION: true,
+      }
     });
 
     const { container } = render(reduxWrapper(<IntlLogistration />));
@@ -119,7 +121,9 @@ describe('Logistration', () => {
 
   it('should render login/register headings when show registration links is disabled', () => {
     mergeConfig({
+      custom: {
       SHOW_REGISTRATION_LINKS: false,
+      }
     });
 
     let props = { selectedPage: LOGIN_PAGE };
@@ -139,9 +143,11 @@ describe('Logistration', () => {
 
   it('should render only login page when public account creation is disabled', () => {
     mergeConfig({
+      custom: {
       ALLOW_PUBLIC_ACCOUNT_CREATION: false,
       DISABLE_ENTERPRISE_LOGIN: 'true',
       SHOW_REGISTRATION_LINKS: 'true',
+      }
     });
 
     store = mockStore({
@@ -170,8 +176,10 @@ describe('Logistration', () => {
 
   it('should display institution login option when secondary providers are present', () => {
     mergeConfig({
+      custom: {
       DISABLE_ENTERPRISE_LOGIN: 'true',
       ALLOW_PUBLIC_ACCOUNT_CREATION: 'true',
+      }
     });
 
     store = mockStore({
@@ -196,13 +204,17 @@ describe('Logistration', () => {
     expect(screen.getByText('Test University')).toBeDefined();
 
     mergeConfig({
+      custom: {
       DISABLE_ENTERPRISE_LOGIN: '',
+      }
     });
   });
 
   it('send tracking and page events when institutional login button is clicked', () => {
     mergeConfig({
+      custom: {
       DISABLE_ENTERPRISE_LOGIN: 'true',
+      }
     });
 
     store = mockStore({
@@ -226,13 +238,17 @@ describe('Logistration', () => {
     expect(sendPageEvent).toHaveBeenCalledWith('login_and_registration', 'institution_login');
 
     mergeConfig({
+      custom: {
       DISABLE_ENTERPRISE_LOGIN: '',
+      }
     });
   });
 
   it('should not display institution register button', () => {
     mergeConfig({
+      custom: {
       DISABLE_ENTERPRISE_LOGIN: 'true',
+      }
     });
 
     store = mockStore({
@@ -256,7 +272,9 @@ describe('Logistration', () => {
     expect(screen.getByText('Test University')).toBeDefined();
 
     mergeConfig({
+      custom: {
       DISABLE_ENTERPRISE_LOGIN: '',
+      }
     });
   });
 

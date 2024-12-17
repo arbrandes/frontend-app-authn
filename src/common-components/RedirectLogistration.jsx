@@ -42,7 +42,7 @@ const RedirectLogistration = (props) => {
       if (registrationEmbedded) {
         window.parent.postMessage({
           action: REDIRECT,
-          redirectUrl: getConfig().POST_REGISTRATION_REDIRECT_URL,
+          redirectUrl: getConfig().custom.POST_REGISTRATION_REDIRECT_URL,
         }, host);
         return null;
       }

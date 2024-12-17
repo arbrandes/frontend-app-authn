@@ -46,9 +46,9 @@ const ConfigurableRegistrationForm = (props) => {
   const formFieldDescriptions = [];
   const honorCode = [];
   const flags = {
-    showConfigurableRegistrationFields: getConfig().ENABLE_DYNAMIC_REGISTRATION_FIELDS,
-    showConfigurableEdxFields: getConfig().SHOW_CONFIGURABLE_EDX_FIELDS,
-    showMarketingEmailOptInCheckbox: getConfig().MARKETING_EMAILS_OPT_IN,
+    showConfigurableRegistrationFields: getConfig().custom.ENABLE_DYNAMIC_REGISTRATION_FIELDS,
+    showConfigurableEdxFields: getConfig().custom.SHOW_CONFIGURABLE_EDX_FIELDS,
+    showMarketingEmailOptInCheckbox: getConfig().custom.MARKETING_EMAILS_OPT_IN,
   };
 
   /**

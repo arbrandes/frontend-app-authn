@@ -142,12 +142,12 @@ const ForgotPasswordPage = (props) => {
               onClick={handleSubmit}
               onMouseDown={(e) => e.preventDefault()}
             />
-            {(getConfig().LOGIN_ISSUE_SUPPORT_LINK) && (
+            {(getConfig().custom.LOGIN_ISSUE_SUPPORT_LINK) && (
               <Hyperlink
                 id="forgot-password"
                 name="forgot-password"
                 className="ml-4 font-weight-500 text-body"
-                destination={getConfig().LOGIN_ISSUE_SUPPORT_LINK}
+                destination={getConfig().custom.LOGIN_ISSUE_SUPPORT_LINK}
                 target="_blank"
                 showLaunchIcon={false}
               >
@@ -157,7 +157,7 @@ const ForgotPasswordPage = (props) => {
             <p className="mt-5.5 small text-gray-700">
               {formatMessage(messages['additional.help.text'], { platformName })}
               <span>
-                <Hyperlink isInline destination={`mailto:${getConfig().INFO_EMAIL}`}>{getConfig().INFO_EMAIL}</Hyperlink>
+                <Hyperlink isInline destination={`mailto:${getConfig().custom.INFO_EMAIL}`}>{getConfig().custom.INFO_EMAIL}</Hyperlink>
               </span>
             </p>
           </Form>

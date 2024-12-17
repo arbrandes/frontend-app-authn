@@ -39,7 +39,7 @@ const ZendeskHelp = () => {
         contactOnlyAfterQuery: true,
         title: { '*': formatMessage(messages.supportTitle) },
         avatar: {
-          url: getConfig().ZENDESK_LOGO_URL,
+          url: getConfig().custom.ZENDESK_LOGO_URL,
           name: { '*': formatMessage(messages.supportTitle) },
         },
       },
@@ -51,7 +51,7 @@ const ZendeskHelp = () => {
   }
 
   return (
-    <Zendesk defer zendeskKey={getConfig().ZENDESK_KEY} {...setting} />
+    <Zendesk defer zendeskKey={getConfig().custom.ZENDESK_KEY} {...setting} />
   );
 };
 

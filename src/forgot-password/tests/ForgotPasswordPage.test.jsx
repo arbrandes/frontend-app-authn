@@ -42,8 +42,10 @@ const initialState = {
 
 describe('ForgotPasswordPage', () => {
   mergeConfig({
-    LOGIN_ISSUE_SUPPORT_LINK: '',
-    INFO_EMAIL: '',
+    custom: {
+      LOGIN_ISSUE_SUPPORT_LINK: '',
+      INFO_EMAIL: '',
+    }
   });
 
   let props = {};
@@ -85,7 +87,9 @@ describe('ForgotPasswordPage', () => {
 
   it('should display need other help signing in button', () => {
     mergeConfig({
-      LOGIN_ISSUE_SUPPORT_LINK: '/support',
+      custom: {
+        LOGIN_ISSUE_SUPPORT_LINK: '/support',
+      }
     });
     render(reduxWrapper(<IntlForgotPasswordPage {...props} />));
     const forgotPasswordButton = screen.findByText('Need help signing in?');

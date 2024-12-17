@@ -11,7 +11,7 @@ import {
 import { AuthLargeLayout, AuthMediumLayout, AuthSmallLayout } from './components/welcome-page-layout';
 
 const BaseContainer = ({ children, showWelcomeBanner, fullName }) => {
-  const enableImageLayout = getConfig().ENABLE_IMAGE_LAYOUT;
+  const enableImageLayout = getConfig().custom.ENABLE_IMAGE_LAYOUT;
 
   if (enableImageLayout) {
     return (

@@ -72,7 +72,9 @@ describe('CountryField', () => {
 
   describe('Test Country Field', () => {
     mergeConfig({
-      SHOW_CONFIGURABLE_EDX_FIELDS: true,
+      custom: {
+        SHOW_CONFIGURABLE_EDX_FIELDS: true,
+      }
     });
 
     const emptyFieldValidation = {

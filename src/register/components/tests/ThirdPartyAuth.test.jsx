@@ -40,9 +40,11 @@ jest.mock('react-router-dom', () => {
 
 describe('ThirdPartyAuth', () => {
   mergeConfig({
-    PRIVACY_POLICY: 'https://privacy-policy.com',
-    TOS_AND_HONOR_CODE: 'https://tos-and-honot-code.com',
-    USER_RETENTION_COOKIE_NAME: 'authn-returning-user',
+    custom: {
+      PRIVACY_POLICY: 'https://privacy-policy.com',
+      TOS_AND_HONOR_CODE: 'https://tos-and-honot-code.com',
+      USER_RETENTION_COOKIE_NAME: 'authn-returning-user',
+    }
   });
 
   let props = {};
@@ -132,7 +134,9 @@ describe('ThirdPartyAuth', () => {
 
   describe('Test Third Party Auth', () => {
     mergeConfig({
-      SHOW_CONFIGURABLE_EDX_FIELDS: true,
+      custom: {
+        SHOW_CONFIGURABLE_EDX_FIELDS: true,
+      }
     });
     getLocale.mockImplementation(() => ('en-us'));
 

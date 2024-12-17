@@ -114,7 +114,9 @@ describe('ProgressiveProfilingTests', () => {
 
   it('should not display button "Learn more about how we use this information."', () => {
     mergeConfig({
-      AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK: '',
+      custom: {
+        AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK: '',
+      }
     });
     const { queryByRole } = render(reduxWrapper(<IntlProgressiveProfilingPage />));
     const button = queryByRole('button', { name: /learn more about how we use this information/i });
@@ -124,7 +126,9 @@ describe('ProgressiveProfilingTests', () => {
 
   it('should display button "Learn more about how we use this information."', () => {
     mergeConfig({
-      AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK: 'http://localhost:1999/support',
+      custom: {
+        AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK: 'http://localhost:1999/support',
+      }
     });
 
     const { getByText } = render(reduxWrapper(<IntlProgressiveProfilingPage />));
@@ -160,7 +164,9 @@ describe('ProgressiveProfilingTests', () => {
 
   it('should send analytic event for support link click', () => {
     mergeConfig({
-      AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK: 'http://localhost:1999/support',
+      custom: {
+        AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK: 'http://localhost:1999/support',
+      }
     });
     render(reduxWrapper(<IntlProgressiveProfilingPage />));
 
@@ -241,7 +247,9 @@ describe('ProgressiveProfilingTests', () => {
   describe('Recommendations test', () => {
     window.OnetrustActiveGroups = 'C0003';
     mergeConfig({
-      ENABLE_POST_REGISTRATION_RECOMMENDATIONS: true,
+      custom: {
+        ENABLE_POST_REGISTRATION_RECOMMENDATIONS: true,
+      }
     });
 
     it('should redirect to recommendations page if recommendations are enabled', () => {
@@ -289,7 +297,9 @@ describe('ProgressiveProfilingTests', () => {
 
   describe('Embedded Form Workflow Test', () => {
     mergeConfig({
-      SEARCH_CATALOG_URL: 'http://localhost/search',
+      custom: {
+        SEARCH_CATALOG_URL: 'http://localhost/search',
+      }
     });
     const host = 'http://example.com';
 

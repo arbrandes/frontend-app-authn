@@ -28,7 +28,7 @@ const TermsOfService = (props) => {
           values={{
             platformName: getConfig().SITE_NAME,
             termsOfService: (
-              <Hyperlink variant="muted" destination={getConfig().TOS_LINK || '#'} target="_blank">
+              <Hyperlink variant="muted" destination={getConfig().custom.TOS_LINK || '#'} target="_blank">
                 {formatMessage(messages['terms.of.service'])}
               </Hyperlink>
             ),

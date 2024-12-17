@@ -270,7 +270,7 @@ describe('LoginPage', () => {
     )).toBeDefined();
 
     mergeConfig({
-      DISABLE_ENTERPRISE_LOGIN: '',
+      custom: { DISABLE_ENTERPRISE_LOGIN: '' },
     });
   });
 
@@ -335,7 +335,7 @@ describe('LoginPage', () => {
 
   it('should show sign-in header for institution login if enterprise login is disabled', () => {
     mergeConfig({
-      DISABLE_ENTERPRISE_LOGIN: true,
+      custom: { DISABLE_ENTERPRISE_LOGIN: true },
     });
 
     store = mockStore({
@@ -356,13 +356,13 @@ describe('LoginPage', () => {
     expect(queryByText('Institution/campus credentials')).toBeDefined();
 
     mergeConfig({
-      DISABLE_ENTERPRISE_LOGIN: '',
+      custom: { DISABLE_ENTERPRISE_LOGIN: '' },
     });
   });
 
   it('should show sign-in header with secondary Providers and without Providers', () => {
     mergeConfig({
-      DISABLE_ENTERPRISE_LOGIN: true,
+      custom: { DISABLE_ENTERPRISE_LOGIN: true },
     });
 
     store = mockStore({
@@ -383,7 +383,7 @@ describe('LoginPage', () => {
     expect(queryByText('Institution/campus credentials')).toBeDefined();
 
     mergeConfig({
-      DISABLE_ENTERPRISE_LOGIN: '',
+      custom: { DISABLE_ENTERPRISE_LOGIN: '' },
     });
   });
 
@@ -422,7 +422,7 @@ describe('LoginPage', () => {
     expect(queryByText('Institution/campus credentials')).toBeDefined();
 
     mergeConfig({
-      DISABLE_ENTERPRISE_LOGIN: '',
+      custom: { DISABLE_ENTERPRISE_LOGIN: '' },
     });
   });
 
@@ -693,7 +693,7 @@ describe('LoginPage', () => {
     expect(container.querySelector(`#${ssoProvider.id}`).querySelector('#provider-name').textContent).toEqual(`${ssoProvider.name}`);
 
     mergeConfig({
-      DISABLE_ENTERPRISE_LOGIN: '',
+      custom: { DISABLE_ENTERPRISE_LOGIN: '' },
     });
   });
 
@@ -710,6 +710,13 @@ describe('LoginPage', () => {
       },
     });
 
+    mergeConfig({
+      custom: {
+        ALLOW_PUBLIC_ACCOUNT_CREATION: true,
+        SHOW_REGISTRATION_LINKS: true,
+      }
+    });
+
     delete window.location;
     window.location = { href: getConfig().BASE_URL.concat(LOGIN_PAGE), search: `?tpa_hint=${ssoProvider.id}` };
 
@@ -721,7 +728,9 @@ describe('LoginPage', () => {
 
   it('should render other ways to sign in button when public account creation is disabled', () => {
     mergeConfig({
-      ALLOW_PUBLIC_ACCOUNT_CREATION: false,
+      custom: {
+        ALLOW_PUBLIC_ACCOUNT_CREATION: false,
+      }
     });
 
     store = mockStore({

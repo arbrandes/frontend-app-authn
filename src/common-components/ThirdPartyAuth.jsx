@@ -32,7 +32,7 @@ const ThirdPartyAuth = (props) => {
   } = props;
   const isInstitutionAuthActive = !!secondaryProviders.length && !currentProvider;
   const isSocialAuthActive = !!providers.length && !currentProvider;
-  const isEnterpriseLoginDisabled = getConfig().DISABLE_ENTERPRISE_LOGIN;
+  const isEnterpriseLoginDisabled = getConfig().custom.DISABLE_ENTERPRISE_LOGIN;
   const enterpriseLoginURL = getConfig().LMS_BASE_URL + ENTERPRISE_LOGIN_URL;
   const isThirdPartyAuthActive = isSocialAuthActive || (isEnterpriseLoginDisabled && isInstitutionAuthActive);
 

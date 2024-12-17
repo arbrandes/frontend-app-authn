@@ -11,7 +11,9 @@ const IntlAccountActivationMessage = injectIntl(AccountActivationMessage);
 describe('AccountActivationMessage', () => {
   beforeEach(() => {
     mergeConfig({
-      MARKETING_EMAILS_OPT_IN: '',
+      custom: {
+        MARKETING_EMAILS_OPT_IN: '',
+      }
     });
   });
 
@@ -78,7 +80,9 @@ describe('AccountActivationMessage', () => {
 describe('EmailConfirmationMessage', () => {
   beforeEach(() => {
     mergeConfig({
-      MARKETING_EMAILS_OPT_IN: 'true',
+      custom: {
+        MARKETING_EMAILS_OPT_IN: 'true',
+      }
     });
   });
 

@@ -9,7 +9,7 @@ const ExtraSmallLayout = () => {
   return (
     <span
       className="w-100 bg-primary-500 banner__image extra-small-layout"
-      style={{ backgroundImage: `url(${getConfig().BANNER_IMAGE_EXTRA_SMALL})` }}
+      style={{ backgroundImage: `url(${getConfig().custom.BANNER_IMAGE_EXTRA_SMALL})` }}
     >
       <Hyperlink destination={getConfig().MARKETING_SITE_BASE_URL}>
         <Image className="company-logo" alt={getConfig().SITE_NAME} src={getConfig().LOGO_WHITE_URL} />

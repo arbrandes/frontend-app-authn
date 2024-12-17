@@ -9,8 +9,10 @@ const IntlHonorCode = injectIntl(HonorCode);
 
 describe('HonorCodeTest', () => {
   mergeConfig({
-    PRIVACY_POLICY: 'http://privacy-policy.com',
-    TOS_AND_HONOR_CODE: 'http://tos-and-honot-code.com',
+    custom: {
+      PRIVACY_POLICY: 'http://privacy-policy.com',
+      TOS_AND_HONOR_CODE: 'http://tos-and-honot-code.com',
+    }
   });
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let value = false;

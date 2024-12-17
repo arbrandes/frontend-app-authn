@@ -41,9 +41,11 @@ jest.mock('react-router-dom', () => {
 
 describe('RegistrationFailure', () => {
   mergeConfig({
-    PRIVACY_POLICY: 'https://privacy-policy.com',
-    TOS_AND_HONOR_CODE: 'https://tos-and-honot-code.com',
-    USER_RETENTION_COOKIE_NAME: 'authn-returning-user',
+    custom: {
+      PRIVACY_POLICY: 'https://privacy-policy.com',
+      TOS_AND_HONOR_CODE: 'https://tos-and-honot-code.com',
+      USER_RETENTION_COOKIE_NAME: 'authn-returning-user',
+    }
   });
 
   let props = {};

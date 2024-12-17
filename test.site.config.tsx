@@ -31,6 +31,47 @@ const config: ProjectSiteConfig = {
   PUBLIC_PATH: '/',
   PUBLISHER_BASE_URL: 'http://localhost:18400',
   STUDIO_BASE_URL: 'http://localhost:18010',
+
+  custom: {
+    SESSION_COOKIE_DOMAIN: 'local.openedx.io',
+    USER_RETENTION_COOKIE_NAME: '',
+    // Features
+    ALLOW_PUBLIC_ACCOUNT_CREATION: false,
+    DISABLE_ENTERPRISE_LOGIN: true,
+    ENABLE_AUTO_GENERATED_USERNAME: false,
+    ENABLE_DYNAMIC_REGISTRATION_FIELDS: false,
+    ENABLE_PROGRESSIVE_PROFILING_ON_AUTHN: false,
+    ENABLE_POST_REGISTRATION_RECOMMENDATIONS: false,
+    MARKETING_EMAILS_OPT_IN: '',
+    SHOW_CONFIGURABLE_EDX_FIELDS: false,
+    SHOW_REGISTRATION_LINKS: false,
+    ENABLE_IMAGE_LAYOUT: false,
+    // Links
+    ACTIVATION_EMAIL_SUPPORT_LINK: null,
+    AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK: null,
+    LOGIN_ISSUE_SUPPORT_LINK: null,
+    PASSWORD_RESET_SUPPORT_LINK: null,
+    POST_REGISTRATION_REDIRECT_URL: '',
+    PRIVACY_POLICY: null,
+    SEARCH_CATALOG_URL: null,
+    TOS_AND_HONOR_CODE: null,
+    TOS_LINK: null,
+    // Base container images
+    BANNER_IMAGE_LARGE: '',
+    BANNER_IMAGE_MEDIUM: '',
+    BANNER_IMAGE_SMALL: '',
+    BANNER_IMAGE_EXTRA_SMALL: '',
+    // Recommendation constants
+    GENERAL_RECOMMENDATIONS: '[]',
+    // Miscellaneous
+    INFO_EMAIL: '',
+    ZENDESK_KEY: null,
+    ZENDESK_LOGO_URL: null,
+    ALGOLIA_APP_ID: '',
+    ALGOLIA_SEARCH_API_KEY: '',
+    ALGOLIA_AUTHN_RECOMMENDATIONS_INDEX: '',
+    OPTIMIZELY_FULL_STACK_SDK_KEY: null,
+  }
 };
 
 export default config;

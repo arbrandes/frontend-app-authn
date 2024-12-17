@@ -38,8 +38,8 @@ const Logistration = (props) => {
   const [institutionLogin, setInstitutionLogin] = useState(false);
   const [key, setKey] = useState('');
   const navigate = useNavigate();
-  const disablePublicAccountCreation = getConfig().ALLOW_PUBLIC_ACCOUNT_CREATION === false;
-  const hideRegistrationLink = getConfig().SHOW_REGISTRATION_LINKS === false;
+  const disablePublicAccountCreation = getConfig().custom.ALLOW_PUBLIC_ACCOUNT_CREATION === false;
+  const hideRegistrationLink = getConfig().custom.SHOW_REGISTRATION_LINKS === false;
 
   useEffect(() => {
     const authService = getAuthService();

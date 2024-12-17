@@ -14,7 +14,7 @@ const AccountActivationMessage = ({ messageType }) => {
   }
 
   const variant = messageType === ACCOUNT_ACTIVATION_MESSAGE.ERROR ? 'danger' : messageType;
-  const activationOrConfirmation = getConfig().MARKETING_EMAILS_OPT_IN ? 'confirmation' : 'activation';
+  const activationOrConfirmation = getConfig().custom.MARKETING_EMAILS_OPT_IN ? 'confirmation' : 'activation';
   const iconMapping = {
     [ACCOUNT_ACTIVATION_MESSAGE.SUCCESS]: CheckCircle,
     [ACCOUNT_ACTIVATION_MESSAGE.ERROR]: Error,
@@ -34,7 +34,7 @@ const AccountActivationMessage = ({ messageType }) => {
     }
     case ACCOUNT_ACTIVATION_MESSAGE.ERROR: {
       const supportLink = (
-        <Alert.Link href={getConfig().ACTIVATION_EMAIL_SUPPORT_LINK}>
+        <Alert.Link href={getConfig().custom.ACTIVATION_EMAIL_SUPPORT_LINK}>
           {formatMessage(messages['account.activation.support.link'])}
         </Alert.Link>
       );

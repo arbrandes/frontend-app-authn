@@ -16,8 +16,8 @@ import messages from './messages';
 const EnterpriseSSO = (props) => {
   const { formatMessage } = useIntl();
   const tpaProvider = props.provider;
-  const hideRegistrationLink = getConfig().ALLOW_PUBLIC_ACCOUNT_CREATION === false
-    || getConfig().SHOW_REGISTRATION_LINKS === false;
+  const hideRegistrationLink = getConfig().custom.ALLOW_PUBLIC_ACCOUNT_CREATION === false
+    || getConfig().custom.SHOW_REGISTRATION_LINKS === false;
 
   const handleSubmit = (e, url) => {
     e.preventDefault();

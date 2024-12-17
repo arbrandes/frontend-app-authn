@@ -10,7 +10,7 @@ const LargeLayout = () => {
   return (
     <div
       className="w-50 bg-primary-500 banner__image large-layout"
-      style={{ backgroundImage: `url(${getConfig().BANNER_IMAGE_LARGE})` }}
+      style={{ backgroundImage: `url(${getConfig().custom.BANNER_IMAGE_LARGE})` }}
     >
       <Hyperlink destination={getConfig().MARKETING_SITE_BASE_URL}>
         <Image className="company-logo position-absolute" alt={getConfig().SITE_NAME} src={getConfig().LOGO_WHITE_URL} />

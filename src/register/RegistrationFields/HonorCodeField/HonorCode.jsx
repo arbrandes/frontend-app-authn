@@ -31,7 +31,7 @@ const HonorCode = (props) => {
             tosAndHonorCode: (
               <Hyperlink
                 className="inline-link"
-                destination={getConfig().TOS_AND_HONOR_CODE || '#'}
+                destination={getConfig().custom.TOS_AND_HONOR_CODE || '#'}
                 target="_blank"
                 showLaunchIcon={false}
               >
@@ -41,7 +41,7 @@ const HonorCode = (props) => {
             privacyPolicy: (
               <Hyperlink
                 className="inline-link"
-                destination={getConfig().PRIVACY_POLICY || '#'}
+                destination={getConfig().custom.PRIVACY_POLICY || '#'}
                 target="_blank"
                 showLaunchIcon={false}
               >
@@ -71,7 +71,7 @@ const HonorCode = (props) => {
           values={{
             platformName: getConfig().SITE_NAME,
             tosAndHonorCode: (
-              <Hyperlink variant="muted" destination={getConfig().TOS_AND_HONOR_CODE || '#'} target="_blank">
+              <Hyperlink variant="muted" destination={getConfig().custom.TOS_AND_HONOR_CODE || '#'} target="_blank">
                 {formatMessage(messages['honor.code'])}
               </Hyperlink>
             ),

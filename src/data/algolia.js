@@ -3,8 +3,8 @@ import algoliasearch from 'algoliasearch';
 
 // initialize Algolia workers
 const initializeSearchClient = () => algoliasearch(
-  getConfig().ALGOLIA_APP_ID,
-  getConfig().ALGOLIA_SEARCH_API_KEY,
+  getConfig().custom.ALGOLIA_APP_ID,
+  getConfig().custom.ALGOLIA_SEARCH_API_KEY,
 );
 
 const getLocationRestrictionFilter = (userCountry) => {
