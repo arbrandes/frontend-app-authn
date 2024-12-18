@@ -8,9 +8,12 @@
   },
   "main": "src/index.ts",
   "module": "src/index.ts",
-  "sideEffects": false,
   "browserslist": [
     "extends @edx/browserslist-config"
+  ],
+  "sideEffects": [
+    "*.css",
+    "*.scss"
   ],
   "scripts": {
     "build": "PORT=1999 openedx build",
