@@ -1,9 +1,11 @@
+@use "@openedx/paragon/scss/core/core" as paragon;
+
 $card-gap: 24px;
 
 .recommendations-container__card-list {
   gap: $card-gap $card-gap;
 
-  @include media-breakpoint-down(sm) {
+  @include paragon.media-breakpoint-down(sm) {
     margin-bottom: 0 !important;
   }
 
@@ -11,15 +13,15 @@ $card-gap: 24px;
     flex: 0 1 100%;
     cursor: pointer;
 
-    @include media-breakpoint-up(sm) {
+    @include paragon.media-breakpoint-up(sm) {
       flex: 0 1 calc(50% - #{$card-gap - 12});
     }
 
-    @include media-breakpoint-up(md) {
+    @include paragon.media-breakpoint-up(md) {
       flex: 0 1 calc(33.333% - #{$card-gap - 8});
     }
 
-    @include media-breakpoint-up(lg) {
+    @include paragon.media-breakpoint-up(lg) {
       flex: 0 1 calc(25% - #{$card-gap - 6});
     }
   }
@@ -28,4 +30,3 @@ $card-gap: 24px;
 .recommendations-container__heading {
   overflow-wrap: break-word;
 }
-

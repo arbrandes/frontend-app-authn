@@ -1,3 +1,5 @@
+@use "@openedx/paragon/scss/core/core" as paragon;
+
 $card-height: 332px;
 $header-height: 104px;
 
@@ -64,52 +66,52 @@ $header-height: 104px;
   }
 
   &.light {
-    background-color: $white;
+    background-color: paragon.$white;
 
     .title {
-      color: $black;
+      color: paragon.$black;
     }
 
     .subtitle {
-      color: $gray-700;
+      color: paragon.$gray-700;
     }
 
     .badge {
-      background-color: $light-500;
-      color: $black;
+      background-color: paragon.$light-500;
+      color: paragon.$black;
     }
 
     .footer-content {
-      color: $gray-700;
+      color: paragon.$gray-700;
     }
   }
 
   &.dark {
-    background-color: $primary-500;
+    background-color: paragon.$primary-500;
 
     .pgn__card-header-title-md {
-      color: $white;
+      color: paragon.$white;
     }
 
     .pgn__card-header-subtitle-md {
-      color: $light-200;
+      color: paragon.$light-200;
     }
 
     .title {
-      color: $white;
+      color: paragon.$white;
     }
 
     .subtitle {
-      color: $light-200;
+      color: paragon.$light-200;
     }
 
     .badge {
-      background-color: $dark-200;
-      color: $white;
+      background-color: paragon.$dark-200;
+      color: paragon.$white;
     }
 
     .footer-content {
-      color: $light-200;
+      color: paragon.$light-200;
     }
   }
 }
