@@ -6,8 +6,16 @@
     "type": "git",
     "url": "git+https://github.com/openedx/frontend-app-authn.git"
   },
-  "main": "src/index.ts",
-  "module": "src/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "config": {
+    "name": "openedxAuthn",
+    "exposes": {}
+  },
   "browserslist": [
     "extends @edx/browserslist-config"
   ],
@@ -16,16 +24,17 @@
     "*.scss"
   ],
   "scripts": {
-    "build": "PORT=1999 openedx build",
-    "build:module": "PORT=1999 openedx build:module",
-    "dev": "PORT=1999 openedx dev",
-    "dev:module": "PORT=1999 openedx dev:module",
+    "build": "openedx build",
+    "build:module": "openedx build:module",
+    "dev": "openedx dev",
+    "dev:module": "openedx dev:module",
+    "dev:legacy": "openedx dev:legacy",
     "i18n_extract": "openedx formatjs extract",
     "lint": "openedx lint .",
     "lint:fix": "openedx lint --fix .",
     "pack": "openedx pack",
     "release": "openedx release",
-    "serve": "PORT=1999 openedx serve",
+    "serve": "openedx serve",
     "snapshot": "openedx test --updateSnapshot",
     "test": "openedx test --coverage --passWithNoTests"
   },
