@@ -1,10 +1,11 @@
 import { useEffect, useMemo } from 'react';
 
 import {
-  getConfig, getCountryList, getLocale, useIntl
+  getConfig, getLocale, useIntl
 } from '@openedx/frontend-base';
 import PropTypes from 'prop-types';
 
+import { getCountryList } from '../../data/countries';
 import { FormFieldRenderer } from '../../field-renderer';
 import { FIELDS } from '../data/constants';
 import messages from '../messages';
