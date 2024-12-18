@@ -1,4 +1,4 @@
-import { ProjectSiteConfig } from '@openedx/frontend-base';
+import { EnvironmentTypes, ProjectSiteConfig } from '@openedx/frontend-base';
 
 const config: ProjectSiteConfig = {
   apps: [],
@@ -10,6 +10,7 @@ const config: ProjectSiteConfig = {
   ECOMMERCE_BASE_URL: 'http://localhost:18130',
   LANGUAGE_PREFERENCE_COOKIE_NAME: 'openedx-language-preference',
   LMS_BASE_URL: 'http://localhost:18000',
+  LEARNER_DASHBOARD_URL: 'http://localhost:18000/dashboard',
   LOGIN_URL: 'http://localhost:18000/login',
   LOGOUT_URL: 'http://localhost:18000/logout',
   LOGO_URL: 'https://edx-cdn.org/v3/default/logo.svg',
@@ -23,7 +24,7 @@ const config: ProjectSiteConfig = {
   SITE_NAME: 'Your Platform Name Here',
   USER_INFO_COOKIE_NAME: 'edx-user-info',
   APP_ID: 'authn',
-  ENVIRONMENT: 'dev',
+  ENVIRONMENT: EnvironmentTypes.TEST,
   ACCOUNT_SETTINGS_URL: 'http://localhost:1997',
   DISCOVERY_API_BASE_URL: 'http://localhost:18381',
   IGNORED_ERROR_REGEX: null,

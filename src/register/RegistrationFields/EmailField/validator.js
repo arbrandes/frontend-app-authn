@@ -1,12 +1,12 @@
 import { distance } from 'fastest-levenshtein';
 
+import { VALID_EMAIL_REGEX } from '../../../data/constants';
+import messages from '../../messages';
 import {
   COMMON_EMAIL_PROVIDERS,
   DEFAULT_SERVICE_PROVIDER_DOMAINS,
   DEFAULT_TOP_LEVEL_DOMAINS,
 } from './constants';
-import { VALID_EMAIL_REGEX } from '../../../data/constants';
-import messages from '../../messages';
 
 export const emailRegex = new RegExp(VALID_EMAIL_REGEX, 'i');
 

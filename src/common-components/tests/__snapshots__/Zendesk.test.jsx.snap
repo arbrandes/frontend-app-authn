@@ -11,7 +11,7 @@ exports[`Zendesk Help should match login page third party auth alert message sna
           "name": {
             "*": "edX Support",
           },
-          "url": undefined,
+          "url": null,
         },
         "contactOnlyAfterQuery": true,
         "suppress": false,
@@ -61,5 +61,6 @@ exports[`Zendesk Help should match login page third party auth alert message sna
       },
     }
   }
+  zendeskKey={null}
 />
 `;

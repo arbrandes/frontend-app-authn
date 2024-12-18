@@ -46,7 +46,9 @@ export const isFormValid = (
         if (!fieldErrors.name) {
           fieldErrors.name = validateName(payload.name, formatMessage);
         }
-        if (fieldErrors.name) { isValid = false; }
+        if (fieldErrors.name) {
+          isValid = false;
+        }
         break;
       case 'email': {
         if (!fieldErrors.email) {
@@ -63,20 +65,26 @@ export const isFormValid = (
           }
           emailSuggestion = suggestion;
         }
-        if (fieldErrors.email) { isValid = false; }
+        if (fieldErrors.email) {
+          isValid = false;
+        }
         break;
       }
       case 'username':
         if (!fieldErrors.username) {
           fieldErrors.username = validateUsername(payload.username, formatMessage);
         }
-        if (fieldErrors.username) { isValid = false; }
+        if (fieldErrors.username) {
+          isValid = false;
+        }
         break;
       case 'password':
         if (!fieldErrors.password) {
           fieldErrors.password = validatePasswordField(payload.password, formatMessage);
         }
-        if (fieldErrors.password) { isValid = false; }
+        if (fieldErrors.password) {
+          isValid = false;
+        }
         break;
       default:
         break;
@@ -98,7 +106,9 @@ export const isFormValid = (
     } else if (!configurableFormFields[key]) {
       fieldErrors[key] = fieldDescriptions[key].error_message;
     }
-    if (fieldErrors[key]) { isValid = false; }
+    if (fieldErrors[key]) {
+      isValid = false;
+    }
   });
 
   return { isValid, fieldErrors, emailSuggestion };

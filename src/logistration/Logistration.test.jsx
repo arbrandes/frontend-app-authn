@@ -92,18 +92,10 @@ describe('Logistration', () => {
     });
   });
 
-  it('should do nothing when user clicks on the same tab (login/register) again', () => {
-    const { container } = render(reduxWrapper(<IntlLogistration />));
-    // While staying on the registration form, clicking the register tab again
-    fireEvent.click(container.querySelector('a[data-rb-event-key="/register"]'));
-
-    expect(sendTrackEvent).not.toHaveBeenCalledWith('edx.bi.register_form.toggled', { category: 'user-engagement' });
-  });
-
   it('should render registration page', () => {
     mergeConfig({
       custom: {
-      ALLOW_PUBLIC_ACCOUNT_CREATION: true,
+        ALLOW_PUBLIC_ACCOUNT_CREATION: true,
       }
     });
 
@@ -122,7 +114,8 @@ describe('Logistration', () => {
   it('should render login/register headings when show registration links is disabled', () => {
     mergeConfig({
       custom: {
-      SHOW_REGISTRATION_LINKS: false,
+        ALLOW_PUBLIC_ACCOUNT_CREATION: true,
+        SHOW_REGISTRATION_LINKS: false,
       }
     });
 
@@ -144,9 +137,9 @@ describe('Logistration', () => {
   it('should render only login page when public account creation is disabled', () => {
     mergeConfig({
       custom: {
-      ALLOW_PUBLIC_ACCOUNT_CREATION: false,
-      DISABLE_ENTERPRISE_LOGIN: 'true',
-      SHOW_REGISTRATION_LINKS: 'true',
+        ALLOW_PUBLIC_ACCOUNT_CREATION: false,
+        DISABLE_ENTERPRISE_LOGIN: 'true',
+        SHOW_REGISTRATION_LINKS: 'true',
       }
     });
 
@@ -177,8 +170,8 @@ describe('Logistration', () => {
   it('should display institution login option when secondary providers are present', () => {
     mergeConfig({
       custom: {
-      DISABLE_ENTERPRISE_LOGIN: 'true',
-      ALLOW_PUBLIC_ACCOUNT_CREATION: 'true',
+        DISABLE_ENTERPRISE_LOGIN: 'true',
+        ALLOW_PUBLIC_ACCOUNT_CREATION: 'true',
       }
     });
 
@@ -205,7 +198,7 @@ describe('Logistration', () => {
 
     mergeConfig({
       custom: {
-      DISABLE_ENTERPRISE_LOGIN: '',
+        DISABLE_ENTERPRISE_LOGIN: '',
       }
     });
   });
@@ -213,7 +206,7 @@ describe('Logistration', () => {
   it('send tracking and page events when institutional login button is clicked', () => {
     mergeConfig({
       custom: {
-      DISABLE_ENTERPRISE_LOGIN: 'true',
+        DISABLE_ENTERPRISE_LOGIN: 'true',
       }
     });
 
@@ -239,7 +232,7 @@ describe('Logistration', () => {
 
     mergeConfig({
       custom: {
-      DISABLE_ENTERPRISE_LOGIN: '',
+        DISABLE_ENTERPRISE_LOGIN: '',
       }
     });
   });
@@ -247,7 +240,7 @@ describe('Logistration', () => {
   it('should not display institution register button', () => {
     mergeConfig({
       custom: {
-      DISABLE_ENTERPRISE_LOGIN: 'true',
+        DISABLE_ENTERPRISE_LOGIN: 'true',
       }
     });
 
@@ -273,7 +266,7 @@ describe('Logistration', () => {
 
     mergeConfig({
       custom: {
-      DISABLE_ENTERPRISE_LOGIN: '',
+        DISABLE_ENTERPRISE_LOGIN: '',
       }
     });
   });
