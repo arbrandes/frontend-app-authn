@@ -1,21 +1,21 @@
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
-
 import ReactDOM from 'react-dom';
+import { RouterProvider } from 'react-router-dom';
 
 import {
   APP_INIT_ERROR, APP_READY,
   ErrorPage,
-  initialize, mergeConfig, subscribe,
+  initialize,
+  subscribe
 } from '@openedx/frontend-base';
 
-import configuration from './config';
 import messages from './i18n';
-import MainApp from './MainApp';
+import createRouter from './router/createRouter';
 
 subscribe(APP_READY, () => {
+  const router = createRouter();
+
   ReactDOM.render(
-    <MainApp />,
+    <RouterProvider router={router} />,
     document.getElementById('root'),
   );
 });
@@ -25,10 +25,5 @@ subscribe(APP_INIT_ERROR, (error) => {
 });
 
 initialize({
-  handlers: {
-    config: () => {
-      mergeConfig(configuration);
-    },
-  },
   messages,
 });
