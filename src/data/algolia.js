@@ -1,10 +1,10 @@
-import { getConfig } from '@openedx/frontend-base';
+import { getAppConfig } from '@openedx/frontend-base';
 import algoliasearch from 'algoliasearch';
 
 // initialize Algolia workers
 const initializeSearchClient = () => algoliasearch(
-  getConfig().custom.ALGOLIA_APP_ID,
-  getConfig().custom.ALGOLIA_SEARCH_API_KEY,
+  getAppConfig('openedxAuthn').ALGOLIA_APP_ID,
+  getAppConfig('openedxAuthn').ALGOLIA_SEARCH_API_KEY,
 );
 
 const getLocationRestrictionFilter = (userCountry) => {

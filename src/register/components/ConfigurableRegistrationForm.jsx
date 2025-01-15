@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react';
 
 import {
+  getAppConfig,
   getConfig, getLocale, useIntl
 } from '@openedx/frontend-base';
 import PropTypes from 'prop-types';
@@ -47,9 +48,9 @@ const ConfigurableRegistrationForm = (props) => {
   const formFieldDescriptions = [];
   const honorCode = [];
   const flags = {
-    showConfigurableRegistrationFields: getConfig().custom.ENABLE_DYNAMIC_REGISTRATION_FIELDS,
-    showConfigurableEdxFields: getConfig().custom.SHOW_CONFIGURABLE_EDX_FIELDS,
-    showMarketingEmailOptInCheckbox: getConfig().custom.MARKETING_EMAILS_OPT_IN,
+    showConfigurableRegistrationFields: getAppConfig('openedxAuthn').ENABLE_DYNAMIC_REGISTRATION_FIELDS,
+    showConfigurableEdxFields: getAppConfig('openedxAuthn').SHOW_CONFIGURABLE_EDX_FIELDS,
+    showMarketingEmailOptInCheckbox: getAppConfig('openedxAuthn').MARKETING_EMAILS_OPT_IN,
   };
 
   /**
@@ -185,7 +186,7 @@ const ConfigurableRegistrationForm = (props) => {
         <FormFieldRenderer
           fieldData={{
             type: 'checkbox',
-            label: formatMessage(messages['registration.opt.in.label'], { siteName: getConfig().SITE_NAME }),
+            label: formatMessage(messages['registration.opt.in.label'], { siteName: getConfig().siteName }),
             name: 'marketingEmailsOptIn',
           }}
           value={formFields.marketingEmailsOptIn}

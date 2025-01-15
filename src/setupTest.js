@@ -1,6 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable max-classes-per-file */
-
 import siteConfig from 'site.config';
 
 import { configureLogging, getConfig, mergeConfig } from '@openedx/frontend-base';

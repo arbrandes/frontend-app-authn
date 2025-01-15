@@ -2,7 +2,7 @@ import { Provider } from 'react-redux';
 import Cookies from 'universal-cookie';
 
 import {
-  configureI18n, getConfig, getLocale, injectIntl, IntlProvider, mergeConfig, sendPageEvent, sendTrackEvent
+  configureI18n, getAppConfig, getConfig, getLocale, injectIntl, IntlProvider, mergeConfig, sendPageEvent, sendTrackEvent
 } from '@openedx/frontend-base';
 import { fireEvent, render } from '@testing-library/react';
 import { mockNavigate, BrowserRouter as Router } from 'react-router-dom';
@@ -119,11 +119,6 @@ describe('RegistrationPage', () => {
   beforeEach(() => {
     store = mockStore(initialState);
     configureI18n({
-      loggingService: { logError: jest.fn() },
-      config: {
-        ENVIRONMENT: 'production',
-        LANGUAGE_PREFERENCE_COOKIE_NAME: 'yum',
-      },
       messages: { 'es-419': {}, de: {}, 'en-us': {} },
     });
     props = {
@@ -179,7 +174,7 @@ describe('RegistrationPage', () => {
       jest.spyOn(global.Date, 'now').mockImplementation(() => 0);
 
       delete window.location;
-      window.location = { href: getConfig().BASE_URL, search: '?next=/course/demo-course-url' };
+      window.location = { href: getConfig().baseUrl, search: '?next=/course/demo-course-url' };
 
       const payload = {
         name: 'John Doe',
@@ -392,7 +387,7 @@ describe('RegistrationPage', () => {
 
     it('should set errors with validations returned by registration api', () => {
       const usernameError = 'It looks like this username is already taken';
-      const emailError = `This email is already associated with an existing or previous ${getConfig().SITE_NAME} account`;
+      const emailError = `This email is already associated with an existing or previous ${getConfig().siteName} account`;
       store = mockStore({
         ...initialState,
         register: {
@@ -493,7 +488,7 @@ describe('RegistrationPage', () => {
     it('should show button label based on cta query params value', () => {
       const buttonLabel = 'Register';
       delete window.location;
-      window.location = { href: getConfig().BASE_URL, search: `?cta=${buttonLabel}` };
+      window.location = { href: getConfig().baseUrl, search: `?cta=${buttonLabel}` };
       const { container } = render(reduxWrapper(<IntlRegistrationPage {...props} />));
       const button = container.querySelector('button[type="submit"] span');
 
@@ -514,7 +509,7 @@ describe('RegistrationPage', () => {
       });
 
       render(routerWrapper(reduxWrapper(<IntlRegistrationPage {...props} />)));
-      expect(Cookies.prototype.set).toHaveBeenCalledWith(getConfig().custom.USER_RETENTION_COOKIE_NAME, true, { domain: 'local.openedx.io', path: '/' });
+      expect(Cookies.prototype.set).toHaveBeenCalledWith(getAppConfig('openedxAuthn').USER_RETENTION_COOKIE_NAME, true, { domain: 'local.openedx.io', path: '/' });
     });
 
     it('should redirect to url returned in registration result after successful account creation', () => {
@@ -530,7 +525,7 @@ describe('RegistrationPage', () => {
         },
       });
       delete window.location;
-      window.location = { href: getConfig().BASE_URL };
+      window.location = { href: getConfig().baseUrl };
       render(routerWrapper(reduxWrapper(<IntlRegistrationPage {...props} />)));
       expect(window.location.href).toBe(dashboardURL);
     });
@@ -559,7 +554,7 @@ describe('RegistrationPage', () => {
         },
       });
       delete window.location;
-      window.location = { href: getConfig().BASE_URL };
+      window.location = { href: getConfig().baseUrl };
       render(routerWrapper(reduxWrapper(<IntlRegistrationPage {...props} />)));
       expect(window.location.href).toBe(dashboardUrl);
     });
@@ -633,7 +628,7 @@ describe('RegistrationPage', () => {
       });
 
       delete window.location;
-      window.location = { href: getConfig().BASE_URL };
+      window.location = { href: getConfig().baseUrl };
       render(routerWrapper(reduxWrapper(<IntlRegistrationPage {...props} />)));
       expect(sendTrackEvent).toHaveBeenCalledWith('edx.bi.user.account.registered.client', {});
     });
@@ -738,7 +733,7 @@ describe('RegistrationPage', () => {
       window.parent.postMessage = jest.fn();
 
       delete window.location;
-      window.location = { href: getConfig().BASE_URL.concat(AUTHN_PROGRESSIVE_PROFILING), search: '?host=http://localhost/host-website' };
+      window.location = { href: getConfig().baseUrl.concat(AUTHN_PROGRESSIVE_PROFILING), search: '?host=http://localhost/host-website' };
 
       store = mockStore({
         ...initialState,
@@ -764,7 +759,7 @@ describe('RegistrationPage', () => {
 
     it('should not display validations error on blur event when embedded variant is rendered', () => {
       delete window.location;
-      window.location = { href: getConfig().BASE_URL.concat(REGISTER_PAGE), search: '?host=http://localhost/host-website' };
+      window.location = { href: getConfig().baseUrl.concat(REGISTER_PAGE), search: '?host=http://localhost/host-website' };
       const { container } = render(reduxWrapper(<IntlRegistrationPage {...props} />));
 
       const usernameInput = container.querySelector('input#username');
@@ -778,7 +773,7 @@ describe('RegistrationPage', () => {
 
     it('should set errors in temporary state when validations are returned by registration api', () => {
       delete window.location;
-      window.location = { href: getConfig().BASE_URL.concat(REGISTER_PAGE), search: '?host=http://localhost/host-website' };
+      window.location = { href: getConfig().baseUrl.concat(REGISTER_PAGE), search: '?host=http://localhost/host-website' };
 
       const usernameError = 'It looks like this username is already taken';
       const emailError = 'This email is already associated with an existing or previous account';
@@ -806,7 +801,7 @@ describe('RegistrationPage', () => {
     it('should clear error on focus for embedded experience also', () => {
       delete window.location;
       window.location = {
-        href: getConfig().BASE_URL.concat(REGISTER_PAGE),
+        href: getConfig().baseUrl.concat(REGISTER_PAGE),
         search: '?host=http://localhost/host-website',
       };
 

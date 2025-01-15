@@ -1,7 +1,6 @@
 import { getAuthenticatedHttpClient, getConfig } from '@openedx/frontend-base';
 import formurlencoded from 'form-urlencoded';
 
-// eslint-disable-next-line import/prefer-default-export
 export async function forgotPassword(email) {
   const requestConfig = {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -10,7 +9,7 @@ export async function forgotPassword(email) {
 
   const { data } = await getAuthenticatedHttpClient()
     .post(
-      `${getConfig().LMS_BASE_URL}/account/password`,
+      `${getConfig().lmsBaseUrl}/account/password`,
       formurlencoded({ email }),
       requestConfig,
     )

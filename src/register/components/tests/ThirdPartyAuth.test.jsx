@@ -106,11 +106,6 @@ describe('ThirdPartyAuth', () => {
   beforeEach(() => {
     store = mockStore(initialState);
     configureI18n({
-      loggingService: { logError: jest.fn() },
-      config: {
-        ENVIRONMENT: 'production',
-        LANGUAGE_PREFERENCE_COOKIE_NAME: 'yum',
-      },
       messages: { 'es-419': {}, de: {}, 'en-us': {} },
     });
     props = {
@@ -179,7 +174,7 @@ describe('ThirdPartyAuth', () => {
       });
 
       delete window.location;
-      window.location = { href: getConfig().BASE_URL.concat(LOGIN_PAGE), search: `?next=/dashboard&tpa_hint=${ssoProvider.id}` };
+      window.location = { href: getConfig().baseUrl.concat(LOGIN_PAGE), search: `?next=/dashboard&tpa_hint=${ssoProvider.id}` };
 
       const { container } = render(
         routerWrapper(reduxWrapper(<IntlRegistrationPage {...props} />)),
@@ -203,7 +198,7 @@ describe('ThirdPartyAuth', () => {
 
       delete window.location;
       window.location = {
-        href: getConfig().BASE_URL.concat(LOGIN_PAGE),
+        href: getConfig().baseUrl.concat(LOGIN_PAGE),
         search: `?next=/dashboard&tpa_hint=${ssoProvider.id}`,
       };
 
@@ -228,7 +223,7 @@ describe('ThirdPartyAuth', () => {
       });
 
       delete window.location;
-      window.location = { href: getConfig().BASE_URL.concat(REGISTER_PAGE), search: `?next=/dashboard&tpa_hint=${ssoProvider.id}` };
+      window.location = { href: getConfig().baseUrl.concat(REGISTER_PAGE), search: `?next=/dashboard&tpa_hint=${ssoProvider.id}` };
       ssoProvider.iconImage = null;
 
       const { container } = render(routerWrapper(reduxWrapper(<IntlRegistrationPage {...props} />)));
@@ -252,10 +247,10 @@ describe('ThirdPartyAuth', () => {
       });
 
       delete window.location;
-      window.location = { href: getConfig().BASE_URL.concat(REGISTER_PAGE), search: `?next=/dashboard&tpa_hint=${secondaryProviders.id}` };
+      window.location = { href: getConfig().baseUrl.concat(REGISTER_PAGE), search: `?next=/dashboard&tpa_hint=${secondaryProviders.id}` };
 
       render(routerWrapper(reduxWrapper(<IntlRegistrationPage {...props} />)));
-      expect(window.location.href).toEqual(getConfig().LMS_BASE_URL + secondaryProviders.registerUrl);
+      expect(window.location.href).toEqual(getConfig().lmsBaseUrl + secondaryProviders.registerUrl);
     });
 
     it('should render regular tpa button for invalid tpa_hint value', () => {
@@ -273,7 +268,7 @@ describe('ThirdPartyAuth', () => {
       });
 
       delete window.location;
-      window.location = { href: getConfig().BASE_URL.concat(LOGIN_PAGE), search: '?next=/dashboard&tpa_hint=invalid' };
+      window.location = { href: getConfig().baseUrl.concat(LOGIN_PAGE), search: '?next=/dashboard&tpa_hint=invalid' };
 
       const { container } = render(routerWrapper(reduxWrapper(<IntlRegistrationPage {...props} />)));
       const providerButton = container.querySelector(`button#${ssoProvider.id} span#provider-name`);
@@ -351,7 +346,7 @@ describe('ThirdPartyAuth', () => {
       });
 
       delete window.location;
-      window.location = { href: getConfig().BASE_URL };
+      window.location = { href: getConfig().baseUrl };
 
       const { container } = render(
         routerWrapper(reduxWrapper(<IntlRegistrationPage {...props} />)),
@@ -360,7 +355,7 @@ describe('ThirdPartyAuth', () => {
       const ssoButton = container.querySelector('button#oa2-apple-id');
       fireEvent.click(ssoButton);
 
-      expect(window.location.href).toBe(getConfig().LMS_BASE_URL + registerUrl);
+      expect(window.location.href).toBe(getConfig().lmsBaseUrl + registerUrl);
     });
 
     it('should redirect to finishAuthUrl upon successful registration via SSO', () => {
@@ -383,10 +378,10 @@ describe('ThirdPartyAuth', () => {
       });
 
       delete window.location;
-      window.location = { href: getConfig().BASE_URL };
+      window.location = { href: getConfig().baseUrl };
 
       render(routerWrapper(reduxWrapper(<IntlRegistrationPage {...props} />)));
-      expect(window.location.href).toBe(getConfig().LMS_BASE_URL + authCompleteUrl);
+      expect(window.location.href).toBe(getConfig().lmsBaseUrl + authCompleteUrl);
     });
 
     // ******** test alert messages ********
@@ -404,7 +399,7 @@ describe('ThirdPartyAuth', () => {
       });
 
       const expectedMessage = `${'You\'ve successfully signed into Apple! We just need a little more information before '
-                              + 'you start learning with '}${getConfig().SITE_NAME}.`;
+        + 'you start learning with '}${getConfig().siteName}.`;
 
       const { container } = render(routerWrapper(reduxWrapper(<IntlRegistrationPage {...props} />)));
       const tpaAlert = container.querySelector('#tpa-alert p');

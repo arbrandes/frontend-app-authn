@@ -1,4 +1,4 @@
-import { getConfig, useIntl } from '@openedx/frontend-base';
+import { getAppConfig, getConfig, useIntl } from '@openedx/frontend-base';
 import { Hyperlink, Image } from '@openedx/paragon';
 
 import './index.scss';
@@ -10,10 +10,10 @@ const LargeLayout = () => {
   return (
     <div
       className="w-50 bg-primary-500 banner__image large-layout"
-      style={{ backgroundImage: `url(${getConfig().custom.BANNER_IMAGE_LARGE})` }}
+      style={{ backgroundImage: `url(${getAppConfig('openedxAuthn').BANNER_IMAGE_LARGE})` }}
     >
-      <Hyperlink destination={getConfig().MARKETING_SITE_BASE_URL}>
-        <Image className="company-logo position-absolute" alt={getConfig().SITE_NAME} src={getConfig().LOGO_WHITE_URL} />
+      <Hyperlink destination={getAppConfig('openedxAuthn').MARKETING_SITE_BASE_URL}>
+        <Image className="company-logo position-absolute" alt={getConfig().siteName} src={getAppConfig('openedxAuthn').LOGO_WHITE_URL} />
       </Hyperlink>
       <div className="min-vh-100 p-5 d-flex align-items-end">
         <h1 className="display-2 mw-sm mb-3 d-flex flex-column flex-shrink-0 justify-content-center">

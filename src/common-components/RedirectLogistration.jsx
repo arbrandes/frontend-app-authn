@@ -1,4 +1,4 @@
-import { getConfig } from '@openedx/frontend-base';
+import { getAppConfig, getConfig } from '@openedx/frontend-base';
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 
@@ -29,7 +29,7 @@ const RedirectLogistration = (props) => {
     // Note: For multiple enterprise use case, we need to make sure that user first visits the
     // enterprise selection page and then complete the auth workflow
     if (finishAuthUrl && !redirectUrl.includes(finishAuthUrl)) {
-      finalRedirectUrl = getConfig().LMS_BASE_URL + finishAuthUrl;
+      finalRedirectUrl = getConfig().lmsBaseUrl + finishAuthUrl;
     } else {
       finalRedirectUrl = redirectUrl;
     }
@@ -42,7 +42,7 @@ const RedirectLogistration = (props) => {
       if (registrationEmbedded) {
         window.parent.postMessage({
           action: REDIRECT,
-          redirectUrl: getConfig().custom.POST_REGISTRATION_REDIRECT_URL,
+          redirectUrl: getAppConfig('openedxAuthn').POST_REGISTRATION_REDIRECT_URL,
         }, host);
         return null;
       }

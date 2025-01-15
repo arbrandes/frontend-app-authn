@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import {
+  getAppConfig,
   getConfig, sendPageEvent, sendTrackEvent, useIntl
 } from '@openedx/frontend-base';
 import {
@@ -27,7 +28,7 @@ import ForgotPasswordAlert from './ForgotPasswordAlert';
 import messages from './messages';
 
 const ForgotPasswordPage = (props) => {
-  const platformName = getConfig().SITE_NAME;
+  const platformName = getConfig().siteName;
   const emailRegex = new RegExp(VALID_EMAIL_REGEX, 'i');
   const {
     status, submitState, emailValidationError,
@@ -100,7 +101,7 @@ const ForgotPasswordPage = (props) => {
         <title>
           {formatMessage(
             messages['forgot.password.page.title'],
-            { siteName: getConfig().SITE_NAME }
+            { siteName: getConfig().siteName }
           )}
         </title>
       </Helmet>
@@ -142,12 +143,12 @@ const ForgotPasswordPage = (props) => {
               onClick={handleSubmit}
               onMouseDown={(e) => e.preventDefault()}
             />
-            {(getConfig().custom.LOGIN_ISSUE_SUPPORT_LINK) && (
+            {(getAppConfig('openedxAuthn').LOGIN_ISSUE_SUPPORT_LINK) && (
               <Hyperlink
                 id="forgot-password"
                 name="forgot-password"
                 className="ml-4 font-weight-500 text-body"
-                destination={getConfig().custom.LOGIN_ISSUE_SUPPORT_LINK}
+                destination={getAppConfig('openedxAuthn').LOGIN_ISSUE_SUPPORT_LINK}
                 target="_blank"
                 showLaunchIcon={false}
               >
@@ -157,7 +158,7 @@ const ForgotPasswordPage = (props) => {
             <p className="mt-5.5 small text-gray-700">
               {formatMessage(messages['additional.help.text'], { platformName })}
               <span>
-                <Hyperlink isInline destination={`mailto:${getConfig().custom.INFO_EMAIL}`}>{getConfig().custom.INFO_EMAIL}</Hyperlink>
+                <Hyperlink isInline destination={`mailto:${getAppConfig('openedxAuthn').INFO_EMAIL}`}>{getAppConfig('openedxAuthn').INFO_EMAIL}</Hyperlink>
               </span>
             </p>
           </Form>

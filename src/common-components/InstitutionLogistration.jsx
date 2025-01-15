@@ -28,7 +28,7 @@ export const RenderInstitutionButton = props => {
  * This component renders the page list of available institutions for login
  * */
 const InstitutionLogistration = props => {
-  const lmsBaseUrl = getConfig().LMS_BASE_URL;
+  const lmsBaseUrl = getConfig().lmsBaseUrl;
   const { formatMessage } = useIntl();
   const {
     secondaryProviders,

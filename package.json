@@ -14,7 +14,9 @@
   ],
   "config": {
     "name": "openedxAuthn",
-    "exposes": {}
+    "exposes": {
+      "./authn": "./src/moduleConfig"
+    }
   },
   "browserslist": [
     "extends @edx/browserslist-config"
@@ -27,7 +29,7 @@
     "build": "openedx build",
     "build:module": "openedx build:module",
     "dev": "openedx dev",
-    "dev:module": "openedx dev:module",
+    "dev:module": "PORT=8082 openedx dev:module",
     "dev:legacy": "openedx dev:legacy",
     "i18n_extract": "openedx formatjs extract",
     "lint": "openedx lint .",

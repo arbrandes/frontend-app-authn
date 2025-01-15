@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import { getConfig, useIntl } from '@openedx/frontend-base';
+import { getAppConfig, getConfig, useIntl } from '@openedx/frontend-base';
 import {
   breakpoints,
   Container,
@@ -27,7 +27,7 @@ const RecommendationsPage = () => {
   const location = useLocation();
 
   const registrationResponse = location.state?.registrationResult;
-  const DASHBOARD_URL = getConfig().LMS_BASE_URL.concat(DEFAULT_REDIRECT_URL);
+  const DASHBOARD_URL = getConfig().lmsBaseUrl.concat(DEFAULT_REDIRECT_URL);
   const educationLevel = EDUCATION_LEVEL_MAPPING[location.state?.educationLevel];
   const userId = location.state?.userId;
 
@@ -72,15 +72,15 @@ const RecommendationsPage = () => {
       <Helmet>
         <title>{formatMessage(
           messages['recommendation.page.title'],
-          { siteName: getConfig().SITE_NAME }
+          { siteName: getConfig().siteName }
         )}
         </title>
       </Helmet>
       <div className="d-flex flex-column bg-light-200 min-vh-100">
         <div className="mb-2">
           <div className="col-md-12 small-screen-top-stripe medium-screen-top-stripe extra-large-screen-top-stripe" />
-          <Hyperlink destination={getConfig().MARKETING_SITE_BASE_URL}>
-            <Image className="logo" alt={getConfig().SITE_NAME} src={getConfig().LOGO_URL} />
+          <Hyperlink destination={getAppConfig('openedxAuthn').MARKETING_SITE_BASE_URL}>
+            <Image className="logo" alt={getConfig().siteName} src={getAppConfig('openedxAuthn').LOGO_URL} />
           </Hyperlink>
         </div>
         <div className="d-flex flex-column align-items-center justify-content-center flex-grow-1">

@@ -29,14 +29,14 @@ describe('ChangePasswordPromptTests', () => {
   });
 
   it('[nudge modal] should redirect to next url when user clicks close button', () => {
-    const dashboardUrl = getConfig().BASE_URL.concat('/dashboard');
+    const dashboardUrl = getConfig().baseUrl.concat('/dashboard');
     props = {
       variant: 'nudge',
       redirectUrl: dashboardUrl,
     };
 
     delete window.location;
-    window.location = { href: getConfig().BASE_URL };
+    window.location = { href: getConfig().baseUrl };
 
     render(
       <IntlProvider locale="en">

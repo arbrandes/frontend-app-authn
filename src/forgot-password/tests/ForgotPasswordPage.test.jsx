@@ -63,11 +63,6 @@ describe('ForgotPasswordPage', () => {
     store = mockStore(initialState);
 
     configureI18n({
-      loggingService: { logError: jest.fn() },
-      config: {
-        ENVIRONMENT: 'production',
-        LANGUAGE_PREFERENCE_COOKIE_NAME: 'yum',
-      },
       messages: { 'es-419': {}, de: {}, 'en-us': {} },
     });
     props = {
@@ -117,7 +112,7 @@ describe('ForgotPasswordPage', () => {
       forgotPassword: { status: INTERNAL_SERVER_ERROR },
     });
     const expectedMessage = 'We were unable to contact you.'
-                            + 'An error has occurred. Try refreshing the page, or check your internet connection.';
+      + 'An error has occurred. Try refreshing the page, or check your internet connection.';
 
     const { container } = render(reduxWrapper(<IntlForgotPasswordPage {...props} />));
 
@@ -237,8 +232,8 @@ describe('ForgotPasswordPage', () => {
     });
 
     const successMessage = 'Check your emailWe sent an email to  with instructions to reset your password. If you do not '
-                           + 'receive a password reset message after 1 minute, verify that you entered the correct email address,'
-                           + ' or check your spam folder. If you need further assistance, contact technical support.';
+      + 'receive a password reset message after 1 minute, verify that you entered the correct email address,'
+      + ' or check your spam folder. If you need further assistance, contact technical support.';
 
     const { container } = render(reduxWrapper(<IntlForgotPasswordPage {...props} />));
     const successElement = findByTextContent(container, successMessage);
@@ -255,8 +250,8 @@ describe('ForgotPasswordPage', () => {
       },
     });
     const successMessage = 'Invalid password reset link'
-                            + 'This password reset link is invalid. It may have been used already. '
-                            + 'Enter your email below to receive a new link.';
+      + 'This password reset link is invalid. It may have been used already. '
+      + 'Enter your email below to receive a new link.';
 
     const { container } = render(reduxWrapper(<IntlForgotPasswordPage {...props} />));
     const successElement = findByTextContent(container, successMessage);

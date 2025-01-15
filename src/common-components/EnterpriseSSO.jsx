@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { getConfig, useIntl } from '@openedx/frontend-base';
+import { getAppConfig, getConfig, useIntl } from '@openedx/frontend-base';
 import {
   Button, Form,
   Icon,
@@ -16,12 +16,12 @@ import messages from './messages';
 const EnterpriseSSO = (props) => {
   const { formatMessage } = useIntl();
   const tpaProvider = props.provider;
-  const hideRegistrationLink = getConfig().custom.ALLOW_PUBLIC_ACCOUNT_CREATION === false
-    || getConfig().custom.SHOW_REGISTRATION_LINKS === false;
+  const hideRegistrationLink = getAppConfig('openedxAuthn').ALLOW_PUBLIC_ACCOUNT_CREATION === false
+    || getAppConfig('openedxAuthn').SHOW_REGISTRATION_LINKS === false;
 
   const handleSubmit = (e, url) => {
     e.preventDefault();
-    window.location.href = getConfig().LMS_BASE_URL + url;
+    window.location.href = getConfig().lmsBaseUrl + url;
   };
 
   const handleClick = (e) => {
@@ -47,7 +47,7 @@ const EnterpriseSSO = (props) => {
                 {tpaProvider.iconImage ? (
                   <div aria-hidden="true">
                     <img className="btn-tpa__image-icon" src={tpaProvider.iconImage} alt={`icon ${tpaProvider.name}`} />
-                    <span className="pl-2" aria-hidden="true">{ tpaProvider.name }</span>
+                    <span className="pl-2" aria-hidden="true">{tpaProvider.name}</span>
                   </div>
                 )
                   : (
@@ -59,7 +59,7 @@ const EnterpriseSSO = (props) => {
                             <Icon className="h-75" src={Login} />
                           )}
                       </div>
-                      <span className="pl-2" aria-hidden="true">{ tpaProvider.name }</span>
+                      <span className="pl-2" aria-hidden="true">{tpaProvider.name}</span>
                     </>
                   )}
               </Button>

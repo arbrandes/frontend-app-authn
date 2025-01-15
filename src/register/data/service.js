@@ -9,7 +9,7 @@ export async function registerRequest(registrationInformation) {
 
   const { data } = await getAuthenticatedHttpClient()
     .post(
-      `${getConfig().LMS_BASE_URL}/api/user/v2/account/registration/`,
+      `${getConfig().lmsBaseUrl}/api/user/v2/account/registration/`,
       QueryString.stringify(registrationInformation),
       requestConfig,
     )
@@ -18,7 +18,7 @@ export async function registerRequest(registrationInformation) {
     });
 
   return {
-    redirectUrl: data.redirect_url || `${getConfig().LMS_BASE_URL}/dashboard`,
+    redirectUrl: data.redirect_url || `${getConfig().lmsBaseUrl}/dashboard`,
     success: data.success || false,
     authenticatedUser: data.authenticated_user,
   };
@@ -31,7 +31,7 @@ export async function getFieldsValidations(formPayload) {
 
   const { data } = await getHttpClient()
     .post(
-      `${getConfig().LMS_BASE_URL}/api/user/v1/validation/registration`,
+      `${getConfig().lmsBaseUrl}/api/user/v1/validation/registration`,
       QueryString.stringify(formPayload),
       requestConfig,
     )

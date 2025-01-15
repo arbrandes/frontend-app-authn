@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import algoliasearchHelper from 'algoliasearch-helper';
 
-import { getConfig } from '@openedx/frontend-base';
+import { getAppConfig } from '@openedx/frontend-base';
 import {
   getLocationRestrictionFilter,
   initializeSearchClient,
@@ -13,7 +13,7 @@ import {
   LEVEL_FACET, MAX_RECOMMENDATIONS, PRODUCT_FACET, PRODUCT_TYPE_COURSE,
 } from '../constants';
 
-const INDEX_NAME = getConfig().custom.ALGOLIA_AUTHN_RECOMMENDATIONS_INDEX;
+const INDEX_NAME = getAppConfig('openedxAuthn').ALGOLIA_AUTHN_RECOMMENDATIONS_INDEX;
 
 /**
  * This hooks returns Algolia recommendations only if functional cookies are enabled. * @param userCountry

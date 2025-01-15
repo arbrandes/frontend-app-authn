@@ -1,4 +1,4 @@
-import { getConfig, useIntl } from '@openedx/frontend-base';
+import { getAppConfig, useIntl } from '@openedx/frontend-base';
 import Zendesk from 'react-zendesk';
 
 import { REGISTER_EMBEDDED_PAGE } from '../data/constants';
@@ -39,7 +39,7 @@ const ZendeskHelp = () => {
         contactOnlyAfterQuery: true,
         title: { '*': formatMessage(messages.supportTitle) },
         avatar: {
-          url: getConfig().custom.ZENDESK_LOGO_URL,
+          url: getAppConfig('openedxAuthn').ZENDESK_LOGO_URL,
           name: { '*': formatMessage(messages.supportTitle) },
         },
       },
@@ -51,7 +51,7 @@ const ZendeskHelp = () => {
   }
 
   return (
-    <Zendesk defer zendeskKey={getConfig().custom.ZENDESK_KEY} {...setting} />
+    <Zendesk defer zendeskKey={getAppConfig('openedxAuthn').ZENDESK_KEY} {...setting} />
   );
 };
 

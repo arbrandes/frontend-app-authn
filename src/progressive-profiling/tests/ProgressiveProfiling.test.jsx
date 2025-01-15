@@ -59,8 +59,8 @@ jest.mock('react-router-dom', () => {
 describe('ProgressiveProfilingTests', () => {
   let store = {};
 
-  const DASHBOARD_URL = getConfig().LMS_BASE_URL.concat(DEFAULT_REDIRECT_URL);
-  const registrationResult = { redirectUrl: getConfig().LMS_BASE_URL + DEFAULT_REDIRECT_URL, success: true };
+  const DASHBOARD_URL = getConfig().lmsBaseUrl.concat(DEFAULT_REDIRECT_URL);
+  const registrationResult = { redirectUrl: getConfig().lmsBaseUrl + DEFAULT_REDIRECT_URL, success: true };
   const fields = {
     company: { name: 'company', type: 'text', label: 'Company' },
     gender: {
@@ -94,11 +94,6 @@ describe('ProgressiveProfilingTests', () => {
   beforeEach(() => {
     store = mockStore(initialState);
     configureI18n({
-      loggingService: { logError: jest.fn() },
-      config: {
-        ENVIRONMENT: 'production',
-        LANGUAGE_PREFERENCE_COOKIE_NAME: 'yum',
-      },
       messages: { 'es-419': {}, de: {}, 'en-us': {} },
     });
     useLocation.mockReturnValue({
@@ -140,7 +135,7 @@ describe('ProgressiveProfilingTests', () => {
 
   it('should open modal on pressing skip for now button', () => {
     delete window.location;
-    window.location = { href: getConfig().BASE_URL.concat(AUTHN_PROGRESSIVE_PROFILING) };
+    window.location = { href: getConfig().baseUrl.concat(AUTHN_PROGRESSIVE_PROFILING) };
     const { getByRole } = render(reduxWrapper(<IntlProgressiveProfilingPage />));
 
     const skipButton = getByRole('button', { name: /skip for now/i });
@@ -185,7 +180,7 @@ describe('ProgressiveProfilingTests', () => {
       host: '',
     };
     delete window.location;
-    window.location = { href: getConfig().BASE_URL.concat(AUTHN_PROGRESSIVE_PROFILING) };
+    window.location = { href: getConfig().baseUrl.concat(AUTHN_PROGRESSIVE_PROFILING) };
     render(reduxWrapper(<IntlProgressiveProfilingPage />));
 
     const nextButton = screen.getByText('Next');
@@ -237,7 +232,7 @@ describe('ProgressiveProfilingTests', () => {
     delete window.location;
     window.location = {
       assign: jest.fn().mockImplementation((value) => { window.location.href = value; }),
-      href: getConfig().BASE_URL,
+      href: getConfig().baseUrl,
     };
 
     render(reduxWrapper(<IntlProgressiveProfilingPage />));
@@ -268,7 +263,7 @@ describe('ProgressiveProfilingTests', () => {
     });
 
     it('should not redirect to recommendations page if user is on its way to enroll in a course', async () => {
-      const redirectUrl = `${getConfig().LMS_BASE_URL}${DEFAULT_REDIRECT_URL}?enrollment_action=1`;
+      const redirectUrl = `${getConfig().lmsBaseUrl}${DEFAULT_REDIRECT_URL}?enrollment_action=1`;
       useLocation.mockReturnValue({
         state: {
           registrationResult: {
@@ -320,7 +315,7 @@ describe('ProgressiveProfilingTests', () => {
     it('should set host property value embedded host for on ramp experience for skip link event', () => {
       delete window.location;
       window.location = {
-        href: getConfig().BASE_URL.concat(AUTHN_PROGRESSIVE_PROFILING),
+        href: getConfig().baseUrl.concat(AUTHN_PROGRESSIVE_PROFILING),
         search: `?host=${host}&variant=${EMBEDDED}`,
       };
       render(reduxWrapper(<IntlProgressiveProfilingPage />));
@@ -335,7 +330,7 @@ describe('ProgressiveProfilingTests', () => {
       delete window.location;
       window.location = {
         assign: jest.fn().mockImplementation((value) => { window.location.href = value; }),
-        href: getConfig().BASE_URL.concat(AUTHN_PROGRESSIVE_PROFILING),
+        href: getConfig().baseUrl.concat(AUTHN_PROGRESSIVE_PROFILING),
         search: `?host=${host}&variant=${EMBEDDED}`,
       };
 
@@ -364,7 +359,7 @@ describe('ProgressiveProfilingTests', () => {
       };
       delete window.location;
       window.location = {
-        href: getConfig().BASE_URL.concat(AUTHN_PROGRESSIVE_PROFILING),
+        href: getConfig().baseUrl.concat(AUTHN_PROGRESSIVE_PROFILING),
         search: `?host=${host}`,
       };
       render(reduxWrapper(<IntlProgressiveProfilingPage />));
@@ -378,7 +373,7 @@ describe('ProgressiveProfilingTests', () => {
       delete window.location;
       window.location = {
         assign: jest.fn().mockImplementation((value) => { window.location.href = value; }),
-        href: getConfig().BASE_URL,
+        href: getConfig().baseUrl,
         search: `?variant=${EMBEDDED}&host=${host}`,
       };
 
@@ -392,7 +387,7 @@ describe('ProgressiveProfilingTests', () => {
       delete window.location;
       window.location = {
         assign: jest.fn().mockImplementation((value) => { window.location.href = value; }),
-        href: getConfig().BASE_URL,
+        href: getConfig().baseUrl,
         search: `?variant=${EMBEDDED}`,
       };
       store = mockStore({
@@ -412,7 +407,7 @@ describe('ProgressiveProfilingTests', () => {
       delete window.location;
       window.location = {
         assign: jest.fn().mockImplementation((value) => { window.location.href = value; }),
-        href: getConfig().BASE_URL,
+        href: getConfig().baseUrl,
         search: `?variant=${EMBEDDED}&host=${host}&next=${redirectUrl}`,
       };
       store = mockStore({

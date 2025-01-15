@@ -87,7 +87,7 @@ const LoginFailureMessage = (props) => {
       break;
     }
     case ALLOWED_DOMAIN_LOGIN_ERROR: {
-      const url = `${getConfig().LMS_BASE_URL}/dashboard/?tpa_hint=${context.tpaHint}`;
+      const url = `${getConfig().lmsBaseUrl}/dashboard/?tpa_hint=${context.tpaHint}`;
       const tpaLink = (
         <a href={url}>
           {formatMessage(messages['tpa.account.link'], { provider: context.provider })}
@@ -186,7 +186,7 @@ const LoginFailureMessage = (props) => {
       errorMessage = (
         <p>
           {formatMessage(messages['login.tpa.authentication.failure'], {
-            platform_name: getConfig().SITE_NAME,
+            platform_name: getConfig().siteName,
             lineBreak: <br />,
             errorMessage: context.errorMessage,
           })}
@@ -202,7 +202,7 @@ const LoginFailureMessage = (props) => {
   return (
     <Alert id="login-failure-alert" className="mb-5" variant="danger" icon={Error}>
       <Alert.Heading>{formatMessage(messages['login.failure.header.title'])}</Alert.Heading>
-      { errorMessage }
+      {errorMessage}
     </Alert>
   );
 };

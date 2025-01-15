@@ -7,7 +7,7 @@ import messages from './messages';
 const ProgressiveProfilingPageModal = (props) => {
   const { formatMessage } = useIntl();
   const { isOpen, redirectUrl } = props;
-  const platformName = getConfig().SITE_NAME;
+  const platformName = getConfig().siteName;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,7 +18,7 @@ const ProgressiveProfilingPageModal = (props) => {
     <ModalDialog
       title={formatMessage(messages['modal.title'])}
       isOpen={isOpen}
-      onClose={() => {}}
+      onClose={() => { }}
       size="sm"
       variant="default"
       hasCloseButton={false}

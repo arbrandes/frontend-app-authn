@@ -15,7 +15,7 @@ const SocialAuthProviders = (props) => {
     e.preventDefault();
 
     const url = e.currentTarget.dataset.providerUrl;
-    window.location.href = getConfig().LMS_BASE_URL + url;
+    window.location.href = getConfig().lmsBaseUrl + url;
   }
 
   const socialAuth = socialAuthProviders.map((provider, index) => (

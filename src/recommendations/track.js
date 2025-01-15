@@ -30,13 +30,15 @@ export const trackRecommendationClick = (product, position, userId) => {
   });
 
   const productUrl = product.url || product?.activeCourseRun?.marketingUrl;
-  return setTimeout(() => { global.open(productUrl, '_blank'); }, LINK_TIMEOUT);
+  return setTimeout(() => {
+    global.open(productUrl, '_blank');
+  }, LINK_TIMEOUT);
 };
 
 export const trackRecommendationsViewed = (recommendedProducts, type, userId) => {
   const viewedProductsList = getProductMapping(recommendedProducts);
 
-  if (viewedProductsList && viewedProductsList.length) {
+  if (viewedProductsList?.length) {
     sendTrackEvent(eventNames.recommendationsViewed, {
       page: 'authn_recommendations',
       recommendation_type: type,

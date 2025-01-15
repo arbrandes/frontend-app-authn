@@ -14,7 +14,7 @@ import EmbeddedRegistrationRoute from '../EmbeddedRegistrationRoute';
 const RRD = require('react-router-dom');
 // Just render plain div with its children
 // eslint-disable-next-line react/prop-types
-RRD.BrowserRouter = ({ children }) => <div>{ children }</div>;
+RRD.BrowserRouter = ({ children }) => <div>{children}</div>;
 module.exports = RRD;
 
 const TestApp = () => (
@@ -59,7 +59,7 @@ describe('EmbeddedRegistrationRoute', () => {
   it('should render embedded register page if host query param is available in the url (embedded)', async () => {
     delete window.location;
     window.location = {
-      href: getConfig().BASE_URL.concat(REGISTER_EMBEDDED_PAGE),
+      href: getConfig().baseUrl.concat(REGISTER_EMBEDDED_PAGE),
       search: '?host=http://localhost/host-websit',
     };
 

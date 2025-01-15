@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { FormattedMessage, getConfig, useIntl } from '@openedx/frontend-base';
+import { FormattedMessage, getAppConfig, getConfig, useIntl } from '@openedx/frontend-base';
 import { Form, Hyperlink } from '@openedx/paragon';
 import PropTypes from 'prop-types';
 
@@ -27,11 +27,11 @@ const HonorCode = (props) => {
                 Member process your personal data in accordance with the {privacyPolicy}."
           description="Text that appears on registration form stating honor code and privacy policy"
           values={{
-            platformName: getConfig().SITE_NAME,
+            platformName: getConfig().siteName,
             tosAndHonorCode: (
               <Hyperlink
                 className="inline-link"
-                destination={getConfig().custom.TOS_AND_HONOR_CODE || '#'}
+                destination={getAppConfig('openedxAuthn').TOS_AND_HONOR_CODE || '#'}
                 target="_blank"
                 showLaunchIcon={false}
               >
@@ -41,7 +41,7 @@ const HonorCode = (props) => {
             privacyPolicy: (
               <Hyperlink
                 className="inline-link"
-                destination={getConfig().custom.PRIVACY_POLICY || '#'}
+                destination={getAppConfig('openedxAuthn').PRIVACY_POLICY || '#'}
                 target="_blank"
                 showLaunchIcon={false}
               >
@@ -69,9 +69,9 @@ const HonorCode = (props) => {
           defaultMessage="I agree to the {platformName}&nbsp;{tosAndHonorCode}"
           description="Text that appears on registration form stating honor code"
           values={{
-            platformName: getConfig().SITE_NAME,
+            platformName: getConfig().siteName,
             tosAndHonorCode: (
-              <Hyperlink variant="muted" destination={getConfig().custom.TOS_AND_HONOR_CODE || '#'} target="_blank">
+              <Hyperlink variant="muted" destination={getAppConfig('openedxAuthn').TOS_AND_HONOR_CODE || '#'} target="_blank">
                 {formatMessage(messages['honor.code'])}
               </Hyperlink>
             ),

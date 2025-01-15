@@ -23,7 +23,7 @@ jest.mock('@openedx/frontend-base', () => ({
   getHttpClient: jest.fn(() => ({
     post: async () => ({
       data: {},
-      catch: () => {},
+      catch: () => { },
     }),
   })),
 }));
@@ -59,11 +59,6 @@ describe('ResetPasswordPage', () => {
   beforeEach(() => {
     store = mockStore(initialState);
     configureI18n({
-      loggingService: { logError: jest.fn() },
-      config: {
-        ENVIRONMENT: 'production',
-        LANGUAGE_PREFERENCE_COOKIE_NAME: 'yum',
-      },
       messages: { 'es-419': {}, de: {}, 'en-us': {} },
     });
     props = {
@@ -203,7 +198,7 @@ describe('ResetPasswordPage', () => {
     store.dispatch = jest.fn(store.dispatch);
     props = {
       status:
-      TOKEN_STATE.PENDING,
+        TOKEN_STATE.PENDING,
     };
 
     render(reduxWrapper(<IntlResetPasswordPage {...props} />));
@@ -213,7 +208,7 @@ describe('ResetPasswordPage', () => {
   it('should redirect the user to Reset password email screen ', async () => {
     props = {
       status:
-      PASSWORD_RESET_ERROR,
+        PASSWORD_RESET_ERROR,
     };
     render(reduxWrapper(<IntlResetPasswordPage {...props} />));
     expect(mockedNavigator).toHaveBeenCalledWith(RESET_PAGE);

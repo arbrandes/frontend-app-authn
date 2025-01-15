@@ -1,4 +1,4 @@
-import { getConfig, useIntl } from '@openedx/frontend-base';
+import { getAppConfig, getConfig, useIntl } from '@openedx/frontend-base';
 import { Hyperlink, Image } from '@openedx/paragon';
 
 import './index.scss';
@@ -10,10 +10,10 @@ const MediumLayout = () => {
   return (
     <div
       className="w-100 mb-3 bg-primary-500 banner__image medium-layout"
-      style={{ backgroundImage: `url(${getConfig().custom.BANNER_IMAGE_MEDIUM})` }}
+      style={{ backgroundImage: `url(${getAppConfig('openedxAuthn').BANNER_IMAGE_MEDIUM})` }}
     >
-      <Hyperlink destination={getConfig().MARKETING_SITE_BASE_URL}>
-        <Image className="company-logo" alt={getConfig().SITE_NAME} src={getConfig().LOGO_WHITE_URL} />
+      <Hyperlink destination={getAppConfig('openedxAuthn').MARKETING_SITE_BASE_URL}>
+        <Image className="company-logo" alt={getConfig().siteName} src={getAppConfig('openedxAuthn').LOGO_WHITE_URL} />
       </Hyperlink>
       <div className="ml-5 pb-4 pt-4">
         <h1 className="display-2 banner__heading">

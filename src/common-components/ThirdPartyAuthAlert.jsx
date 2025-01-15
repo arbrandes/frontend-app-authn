@@ -8,7 +8,7 @@ import messages from './messages';
 const ThirdPartyAuthAlert = (props) => {
   const { formatMessage } = useIntl();
   const { currentProvider, referrer } = props;
-  const platformName = getConfig().SITE_NAME;
+  const platformName = getConfig().siteName;
   let message;
 
   if (referrer === LOGIN_PAGE) {
@@ -27,7 +27,7 @@ const ThirdPartyAuthAlert = (props) => {
         {referrer === REGISTER_PAGE ? (
           <Alert.Heading>{formatMessage(messages['tpa.alert.heading'])}</Alert.Heading>
         ) : null}
-        <p>{ message }</p>
+        <p>{message}</p>
       </Alert>
       {referrer === REGISTER_PAGE ? (
         <h4 className="mt-4 mb-4">{formatMessage(messages['registration.using.tpa.form.heading'])}</h4>

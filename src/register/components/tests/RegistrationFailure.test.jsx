@@ -107,11 +107,6 @@ describe('RegistrationFailure', () => {
   beforeEach(() => {
     store = mockStore(initialState);
     configureI18n({
-      loggingService: { logError: jest.fn() },
-      config: {
-        ENVIRONMENT: 'production',
-        LANGUAGE_PREFERENCE_COOKIE_NAME: 'yum',
-      },
       messages: { 'es-419': {}, de: {}, 'en-us': {} },
     });
     props = {

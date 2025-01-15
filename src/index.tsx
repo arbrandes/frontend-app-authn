@@ -1,21 +1,32 @@
 import ReactDOM from 'react-dom';
-import { RouterProvider } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import {
   APP_INIT_ERROR, APP_READY,
+  AppProvider,
   ErrorPage,
+  getBasename,
   initialize,
   subscribe
 } from '@openedx/frontend-base';
 
+import { getAppConfig } from '@openedx/frontend-base/runtime/config';
 import messages from './i18n';
-import createRouter from './router/createRouter';
+import routes from './routes';
 
 subscribe(APP_READY, () => {
-  const router = createRouter();
+  const router = createBrowserRouter(routes, {
+    basename: getBasename(),
+  });
 
   ReactDOM.render(
-    <RouterProvider router={router} />,
+    <AppProvider>
+      <Helmet>
+        <link rel="shortcut icon" href={getAppConfig('openedxAuthn').FAVICON_URL as string} type="image/x-icon" />
+      </Helmet>
+      <RouterProvider router={router} />
+    </AppProvider>,
     document.getElementById('root'),
   );
 });

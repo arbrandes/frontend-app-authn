@@ -430,7 +430,7 @@ describe('LoginPage', () => {
 
   it('should match login internal server error message', () => {
     const expectedMessage = 'We couldn\'t sign you in.'
-                            + 'An error has occurred. Try refreshing the page, or check your internet connection.';
+      + 'An error has occurred. Try refreshing the page, or check your internet connection.';
     store = mockStore({
       ...initialState,
       login: {
@@ -460,8 +460,7 @@ describe('LoginPage', () => {
     });
 
     const expectedMessage = `${'You have successfully signed into Apple, but your Apple account does not have a '
-                            + 'linked '}${getConfig().SITE_NAME} account. To link your accounts, sign in now using your ${
-      getConfig().SITE_NAME} password.`;
+      + 'linked '}${getConfig().siteName} account. To link your accounts, sign in now using your ${getConfig().siteName} password.`;
 
     render(reduxWrapper(<IntlLoginPage {...props} />));
     expect(screen.getByText(
@@ -522,7 +521,7 @@ describe('LoginPage', () => {
     });
 
     delete window.location;
-    window.location = { href: getConfig().BASE_URL };
+    window.location = { href: getConfig().baseUrl };
     render(reduxWrapper(<IntlLoginPage {...props} />));
     expect(window.location.href).toBe(dashboardURL);
   });
@@ -548,10 +547,10 @@ describe('LoginPage', () => {
     });
 
     delete window.location;
-    window.location = { href: getConfig().BASE_URL };
+    window.location = { href: getConfig().baseUrl };
 
     render(reduxWrapper(<IntlLoginPage {...props} />));
-    expect(window.location.href).toBe(getConfig().LMS_BASE_URL + authCompleteUrl);
+    expect(window.location.href).toBe(getConfig().lmsBaseUrl + authCompleteUrl);
   });
 
   it('should redirect to social auth provider url on SSO button click', () => {
@@ -567,7 +566,7 @@ describe('LoginPage', () => {
     });
 
     delete window.location;
-    window.location = { href: getConfig().BASE_URL };
+    window.location = { href: getConfig().baseUrl };
 
     render(reduxWrapper(<IntlLoginPage {...props} />));
 
@@ -575,7 +574,7 @@ describe('LoginPage', () => {
       '',
       { selector: '#oa2-apple-id' },
     ));
-    expect(window.location.href).toBe(getConfig().LMS_BASE_URL + ssoProvider.loginUrl);
+    expect(window.location.href).toBe(getConfig().lmsBaseUrl + ssoProvider.loginUrl);
   });
 
   it('should redirect to finishAuthUrl upon successful authentication via SSO', () => {
@@ -596,10 +595,10 @@ describe('LoginPage', () => {
     });
 
     delete window.location;
-    window.location = { href: getConfig().BASE_URL };
+    window.location = { href: getConfig().baseUrl };
 
     render(reduxWrapper(<IntlLoginPage {...props} />));
-    expect(window.location.href).toBe(getConfig().LMS_BASE_URL + finishAuthUrl);
+    expect(window.location.href).toBe(getConfig().lmsBaseUrl + finishAuthUrl);
   });
 
   // ******** test hinted third party auth ********
@@ -618,7 +617,7 @@ describe('LoginPage', () => {
     });
 
     delete window.location;
-    window.location = { href: getConfig().BASE_URL.concat(LOGIN_PAGE), search: `?next=/dashboard&tpa_hint=${ssoProvider.id}` };
+    window.location = { href: getConfig().baseUrl.concat(LOGIN_PAGE), search: `?next=/dashboard&tpa_hint=${ssoProvider.id}` };
 
     render(reduxWrapper(<IntlLoginPage {...props} />));
     expect(screen.getByText(
@@ -645,7 +644,7 @@ describe('LoginPage', () => {
     });
 
     delete window.location;
-    window.location = { href: getConfig().BASE_URL.concat(LOGIN_PAGE), search: `?next=/dashboard&tpa_hint=${ssoProvider.id}` };
+    window.location = { href: getConfig().baseUrl.concat(LOGIN_PAGE), search: `?next=/dashboard&tpa_hint=${ssoProvider.id}` };
 
     const { container } = render(reduxWrapper(<IntlLoginPage {...props} />));
     expect(container.querySelector('.react-loading-skeleton')).toBeTruthy();
@@ -666,11 +665,11 @@ describe('LoginPage', () => {
     });
 
     delete window.location;
-    window.location = { href: getConfig().BASE_URL.concat(LOGIN_PAGE), search: `?next=/dashboard&tpa_hint=${secondaryProviders.id}` };
+    window.location = { href: getConfig().baseUrl.concat(LOGIN_PAGE), search: `?next=/dashboard&tpa_hint=${secondaryProviders.id}` };
     secondaryProviders.iconImage = null;
 
     render(reduxWrapper(<IntlLoginPage {...props} />));
-    expect(window.location.href).toEqual(getConfig().LMS_BASE_URL + secondaryProviders.loginUrl);
+    expect(window.location.href).toEqual(getConfig().lmsBaseUrl + secondaryProviders.loginUrl);
   });
 
   it('should render regular tpa button for invalid tpa_hint value', () => {
@@ -687,7 +686,7 @@ describe('LoginPage', () => {
     });
 
     delete window.location;
-    window.location = { href: getConfig().BASE_URL.concat(LOGIN_PAGE), search: '?next=/dashboard&tpa_hint=invalid' };
+    window.location = { href: getConfig().baseUrl.concat(LOGIN_PAGE), search: '?next=/dashboard&tpa_hint=invalid' };
 
     const { container } = render(reduxWrapper(<IntlLoginPage {...props} />));
     expect(container.querySelector(`#${ssoProvider.id}`).querySelector('#provider-name').textContent).toEqual(`${ssoProvider.name}`);
@@ -718,7 +717,7 @@ describe('LoginPage', () => {
     });
 
     delete window.location;
-    window.location = { href: getConfig().BASE_URL.concat(LOGIN_PAGE), search: `?tpa_hint=${ssoProvider.id}` };
+    window.location = { href: getConfig().baseUrl.concat(LOGIN_PAGE), search: `?tpa_hint=${ssoProvider.id}` };
 
     render(reduxWrapper(<IntlLoginPage {...props} />));
     expect(screen.getByText(
@@ -746,7 +745,7 @@ describe('LoginPage', () => {
     });
 
     delete window.location;
-    window.location = { href: getConfig().BASE_URL.concat(LOGIN_PAGE), search: `?tpa_hint=${ssoProvider.id}` };
+    window.location = { href: getConfig().baseUrl.concat(LOGIN_PAGE), search: `?tpa_hint=${ssoProvider.id}` };
 
     render(reduxWrapper(<IntlLoginPage {...props} />));
     expect(screen.getByText(

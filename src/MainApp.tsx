@@ -1,5 +1,4 @@
-import { AppProvider, getConfig } from '@openedx/frontend-base';
-import { Helmet } from 'react-helmet';
+import { getAppConfig } from '@openedx/frontend-base';
 import { Provider } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
@@ -9,18 +8,15 @@ import {
 } from './common-components';
 import configureStore from './data/configureStore';
 
+import './sass/_style.scss';
+
 registerIcons();
 
 const MainApp = () => (
-  <AppProvider>
-    <Provider store={configureStore()}>
-      <Helmet>
-        <link rel="shortcut icon" href={getConfig().FAVICON_URL} type="image/x-icon" />
-      </Helmet>
-      {getConfig().custom.ZENDESK_KEY && <Zendesk />}
-      <Outlet />
-    </Provider>
-  </AppProvider>
+  <Provider store={configureStore()}>
+    {getAppConfig('openedxAuthn').ZENDESK_KEY && <Zendesk />}
+    <Outlet />
+  </Provider>
 );
 
 export default MainApp;

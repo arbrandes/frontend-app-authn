@@ -1,4 +1,4 @@
-import { getConfig, useIntl } from '@openedx/frontend-base';
+import { getAppConfig, getConfig, useIntl } from '@openedx/frontend-base';
 import {
   Hyperlink, Icon,
 } from '@openedx/paragon';
@@ -32,8 +32,8 @@ const ThirdPartyAuth = (props) => {
   } = props;
   const isInstitutionAuthActive = !!secondaryProviders.length && !currentProvider;
   const isSocialAuthActive = !!providers.length && !currentProvider;
-  const isEnterpriseLoginDisabled = getConfig().custom.DISABLE_ENTERPRISE_LOGIN;
-  const enterpriseLoginURL = getConfig().LMS_BASE_URL + ENTERPRISE_LOGIN_URL;
+  const isEnterpriseLoginDisabled = getAppConfig('openedxAuthn').DISABLE_ENTERPRISE_LOGIN;
+  const enterpriseLoginURL = getConfig().lmsBaseUrl + ENTERPRISE_LOGIN_URL;
   const isThirdPartyAuthActive = isSocialAuthActive || (isEnterpriseLoginDisabled && isInstitutionAuthActive);
 
   return (

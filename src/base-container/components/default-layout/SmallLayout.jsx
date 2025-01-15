@@ -1,4 +1,4 @@
-import { getConfig, useIntl } from '@openedx/frontend-base';
+import { getAppConfig, getConfig, useIntl } from '@openedx/frontend-base';
 import { Hyperlink, Image } from '@openedx/paragon';
 import classNames from 'classnames';
 
@@ -11,11 +11,11 @@ const SmallLayout = () => {
     <span className="bg-primary-400 w-100">
       <div className="col-md-12 small-screen-top-stripe" />
       <div>
-        <Hyperlink destination={getConfig().MARKETING_SITE_BASE_URL}>
-          <Image className="logo-small" alt={getConfig().SITE_NAME} src={getConfig().LOGO_WHITE_URL} />
+        <Hyperlink destination={getAppConfig('openedxAuthn').MARKETING_SITE_BASE_URL}>
+          <Image className="logo-small" alt={getConfig().siteName} src={getAppConfig('openedxAuthn').LOGO_WHITE_URL} />
         </Hyperlink>
         <div className="d-flex align-items-center m-3.5">
-          <div className={classNames({ 'small-yellow-line mr-n2.5': getConfig().SITE_NAME === 'edX' })} />
+          <div className={classNames({ 'small-yellow-line mr-n2.5': getConfig().siteName === 'edX' })} />
           <h1
             className={classNames(
               'text-white mt-3.5 mb-3.5',
@@ -24,7 +24,7 @@ const SmallLayout = () => {
             <span>
               {formatMessage(messages['start.learning'])}{' '}
               <span className="text-accent-a d-inline-block">
-                {formatMessage(messages['with.site.name'], { siteName: getConfig().SITE_NAME })}
+                {formatMessage(messages['with.site.name'], { siteName: getConfig().siteName })}
               </span>
             </span>
           </h1>

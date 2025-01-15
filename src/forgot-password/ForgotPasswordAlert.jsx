@@ -1,4 +1,4 @@
-import { FormattedMessage, getConfig, useIntl } from '@openedx/frontend-base';
+import { FormattedMessage, getAppConfig, useIntl } from '@openedx/frontend-base';
 import { Alert } from '@openedx/paragon';
 import { CheckCircle, Error } from '@openedx/paragon/icons';
 import PropTypes from 'prop-types';
@@ -33,7 +33,7 @@ const ForgotPasswordAlert = (props) => {
           values={{
             email: <span className="data-hj-suppress">{email}</span>,
             supportLink: (
-              <Alert.Link href={getConfig().custom.PASSWORD_RESET_SUPPORT_LINK} target="_blank">
+              <Alert.Link href={getAppConfig('openedxAuthn').PASSWORD_RESET_SUPPORT_LINK} target="_blank">
                 {formatMessage(messages['confirmation.support.link'])}
               </Alert.Link>
             ),

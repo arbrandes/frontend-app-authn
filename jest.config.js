@@ -8,7 +8,6 @@ module.exports = createConfig('test', {
     'src/setupTest.js',
     'src/i18n',
     'src/index.jsx',
-    'MainApp.jsx',
   ],
   moduleNameMapper: {
     '\\.svg$': '<rootDir>/src/__mocks__/svg.js',

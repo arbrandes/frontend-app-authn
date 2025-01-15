@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import {
+  getAppConfig,
   getAuthService, getConfig, sendPageEvent, sendTrackEvent, useIntl
 } from '@openedx/frontend-base';
 import {
@@ -38,13 +39,13 @@ const Logistration = (props) => {
   const [institutionLogin, setInstitutionLogin] = useState(false);
   const [key, setKey] = useState('');
   const navigate = useNavigate();
-  const disablePublicAccountCreation = getConfig().custom.ALLOW_PUBLIC_ACCOUNT_CREATION === false;
-  const hideRegistrationLink = getConfig().custom.SHOW_REGISTRATION_LINKS === false;
+  const disablePublicAccountCreation = getAppConfig('openedxAuthn').ALLOW_PUBLIC_ACCOUNT_CREATION === false;
+  const hideRegistrationLink = getAppConfig('openedxAuthn').SHOW_REGISTRATION_LINKS === false;
 
   useEffect(() => {
     const authService = getAuthService();
     if (authService) {
-      authService.getCsrfTokenService().getCsrfToken(getConfig().LMS_BASE_URL);
+      authService.getCsrfTokenService().getCsrfToken(getConfig().lmsBaseUrl);
     }
   });
 
@@ -128,7 +129,7 @@ const Logistration = (props) => {
                     <Tab title={formatMessage(messages['logistration.sign.in'])} eventKey={LOGIN_PAGE} />
                   </Tabs>
                 ))}
-              { key && (
+              {key && (
                 <Navigate to={updatePathWithQueryParams(key)} replace />
               )}
               <div id="main-content" className="main-content">

@@ -26,7 +26,7 @@ describe('HonorCodeTest', () => {
   });
 
   it('should render error msg if honor code is not checked', () => {
-    const errorMessage = `You must agree to the ${getConfig().SITE_NAME} Honor Code`;
+    const errorMessage = `You must agree to the ${getConfig().siteName} Honor Code`;
     const { container } = render(
       <IntlProvider locale="en">
         <IntlHonorCode
@@ -61,8 +61,8 @@ describe('HonorCodeTest', () => {
       </IntlProvider>,
     );
     const expectedMsg = 'By creating an account, you agree to the Terms of Service and Honor Code and you '
-                        + 'acknowledge that Your Platform Name Here and each Member process your personal data in '
-                        + 'accordance with the Privacy Policy.';
+      + 'acknowledge that Your Platform Name Here and each Member process your personal data in '
+      + 'accordance with the Privacy Policy.';
     const honorCodeField = container.querySelector('#honor-code');
     expect(honorCodeField.textContent).toEqual(expectedMsg);
   });

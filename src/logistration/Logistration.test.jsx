@@ -83,11 +83,6 @@ describe('Logistration', () => {
     store = mockStore(initialState);
 
     configureI18n({
-      loggingService: { logError: jest.fn() },
-      config: {
-        ENVIRONMENT: 'production',
-        LANGUAGE_PREFERENCE_COOKIE_NAME: 'yum',
-      },
       messages: { 'es-419': {}, de: {}, 'en-us': {} },
     });
   });
@@ -258,7 +253,7 @@ describe('Logistration', () => {
     });
 
     delete window.location;
-    window.location = { hostname: getConfig().SITE_NAME, href: getConfig().BASE_URL };
+    window.location = { hostname: getConfig().siteName, href: getConfig().baseUrl };
 
     render(reduxWrapper(<IntlLogistration />));
     fireEvent.click(screen.getByText('Institution/campus credentials'));

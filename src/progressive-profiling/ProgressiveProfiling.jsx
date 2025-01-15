@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import {
   AxiosJwtAuthService,
   configureAuth,
+  getAppConfig,
   getAuthenticatedUser,
   getConfig,
   getLoggingService,
@@ -59,7 +60,7 @@ const ProgressiveProfiling = (props) => {
   const authenticatedUser = getAuthenticatedUser() || location.state?.authenticatedUser;
   const functionalCookiesConsent = isOneTrustFunctionalCookieEnabled();
   const enablePostRegistrationRecommendations = (
-    getConfig().custom.ENABLE_POST_REGISTRATION_RECOMMENDATIONS && functionalCookiesConsent
+    getAppConfig('openedxAuthn').ENABLE_POST_REGISTRATION_RECOMMENDATIONS && functionalCookiesConsent
   );
 
   const [registrationResult, setRegistrationResult] = useState({ redirectUrl: '' });
@@ -93,7 +94,7 @@ const ProgressiveProfiling = (props) => {
         fields: welcomePageContext.fields,
         extendedProfile: welcomePageContext.extended_profile,
       });
-      const nextUrl = welcomePageContext.nextUrl ? welcomePageContext.nextUrl : getConfig().custom.SEARCH_CATALOG_URL;
+      const nextUrl = welcomePageContext.nextUrl ? welcomePageContext.nextUrl : getAppConfig('openedxAuthn').SEARCH_CATALOG_URL;
       setRegistrationResult({ redirectUrl: nextUrl });
     }
   }, [registrationEmbedded, welcomePageContext]);
@@ -134,7 +135,7 @@ const ProgressiveProfiling = (props) => {
     || welcomePageContextApiStatus === FAILURE_STATE
     || (welcomePageContextApiStatus === COMPLETE_STATE && !Object.keys(welcomePageContext).includes('fields'))
   ) {
-    const DASHBOARD_URL = getConfig().LMS_BASE_URL.concat(DEFAULT_REDIRECT_URL);
+    const DASHBOARD_URL = getConfig().lmsBaseUrl.concat(DEFAULT_REDIRECT_URL);
     global.location.assign(DASHBOARD_URL);
     return null;
   }
@@ -203,7 +204,7 @@ const ProgressiveProfiling = (props) => {
       <Helmet>
         <title>{formatMessage(
           messages['progressive.profiling.page.title'],
-          { siteName: getConfig().SITE_NAME }
+          { siteName: getConfig().siteName }
         )}
         </title>
       </Helmet>
@@ -239,12 +240,12 @@ const ProgressiveProfiling = (props) => {
             ) : null}
             <Form>
               {formFields}
-              {(getConfig().custom.AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK) && (
+              {(getAppConfig('openedxAuthn').AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK) && (
                 <span className="pp-page__support-link">
                   <Hyperlink
                     isInline
                     variant="muted"
-                    destination={getConfig().custom.AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK}
+                    destination={getAppConfig('openedxAuthn').AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK}
                     target="_blank"
                     showLaunchIcon={false}
                     onClick={() => (sendTrackEvent('edx.bi.welcome.page.support.link.clicked'))}

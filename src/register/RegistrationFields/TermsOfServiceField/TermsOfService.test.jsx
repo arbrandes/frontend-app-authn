@@ -17,7 +17,7 @@ describe('TermsOfServiceTest', () => {
   });
 
   it('should render error msg if Terms of Service checkbox is not checked', () => {
-    const errorMessage = `You must agree to the ${getConfig().SITE_NAME} Terms of Service`;
+    const errorMessage = `You must agree to the ${getConfig().siteName} Terms of Service`;
     const { container } = render(
       <IntlProvider locale="en">
         <IntlTermsOfService errorMessage={errorMessage} onChangeHandler={changeHandler} />

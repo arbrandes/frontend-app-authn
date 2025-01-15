@@ -21,7 +21,7 @@ const ChangePasswordPrompt = ({ variant, redirectUrl }) => {
       if (variant === 'block') {
         setRedirectToResetPasswordPage(true);
       } else {
-        window.location.href = redirectUrl || getConfig().LMS_BASE_URL.concat(DEFAULT_REDIRECT_URL);
+        window.location.href = redirectUrl || getConfig().lmsBaseUrl.concat(DEFAULT_REDIRECT_URL);
       }
     },
   };

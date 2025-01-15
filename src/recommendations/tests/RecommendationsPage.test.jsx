@@ -38,8 +38,8 @@ jest.mock('../data/hooks/useAlgoliaRecommendations', () => jest.fn());
 describe('RecommendationsPageTests', () => {
   let store = {};
 
-  const dashboardUrl = getConfig().LMS_BASE_URL.concat(DEFAULT_REDIRECT_URL);
-  const redirectUrl = getConfig().LMS_BASE_URL.concat('/course-about-page-url');
+  const dashboardUrl = getConfig().lmsBaseUrl.concat(DEFAULT_REDIRECT_URL);
+  const redirectUrl = getConfig().lmsBaseUrl.concat('/course-about-page-url');
 
   const registrationResult = {
     redirectUrl,

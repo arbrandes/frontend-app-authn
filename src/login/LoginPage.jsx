@@ -182,7 +182,7 @@ const LoginPage = (props) => {
     }
 
     if (skipHintedLogin) {
-      window.location.href = getConfig().LMS_BASE_URL + provider.loginUrl;
+      window.location.href = getConfig().lmsBaseUrl + provider.loginUrl;
       return null;
     }
 
@@ -202,7 +202,7 @@ const LoginPage = (props) => {
   return (
     <>
       <Helmet>
-        <title>{formatMessage(messages['login.page.title'], { siteName: getConfig().SITE_NAME })}</title>
+        <title>{formatMessage(messages['login.page.title'], { siteName: getConfig().siteName })}</title>
       </Helmet>
       <RedirectLogistration
         success={loginResult.success}

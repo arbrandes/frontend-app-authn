@@ -109,7 +109,7 @@ describe('login reducer', () => {
 
   it('should set redirect url on login success action', () => {
     const payload = {
-      redirectUrl: `${getConfig().BASE_URL}${DEFAULT_REDIRECT_URL}`,
+      redirectUrl: `${getConfig().baseUrl}${DEFAULT_REDIRECT_URL}`,
       success: true,
     };
     const action = {
