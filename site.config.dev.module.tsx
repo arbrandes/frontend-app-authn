@@ -34,8 +34,6 @@ const config: AppConfig = {
   GENERAL_RECOMMENDATIONS: '[]',
   // Miscellaneous
   INFO_EMAIL: '',
-  ZENDESK_KEY: 'booyah',
-  ZENDESK_LOGO_URL: null,
   ALGOLIA_APP_ID: '',
   ALGOLIA_SEARCH_API_KEY: '',
   ALGOLIA_AUTHN_RECOMMENDATIONS_INDEX: '',

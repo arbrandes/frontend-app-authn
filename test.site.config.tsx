@@ -50,8 +50,6 @@ const config: ProjectSiteConfig = {
     GENERAL_RECOMMENDATIONS: '[]',
     // Miscellaneous
     INFO_EMAIL: '',
-    ZENDESK_KEY: null,
-    ZENDESK_LOGO_URL: null,
     ALGOLIA_APP_ID: '',
     ALGOLIA_SEARCH_API_KEY: '',
     ALGOLIA_AUTHN_RECOMMENDATIONS_INDEX: '',
