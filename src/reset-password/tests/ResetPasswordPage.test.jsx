@@ -1,7 +1,6 @@
-import React from 'react';
 import { Provider } from 'react-redux';
 
-import { configure, injectIntl, IntlProvider } from '@edx/frontend-platform/i18n';
+import { configureI18n, injectIntl, IntlProvider } from '@openedx/frontend-base';
 import {
   fireEvent, render, screen,
 } from '@testing-library/react';
@@ -19,7 +18,16 @@ import ResetPasswordPage from '../ResetPasswordPage';
 const mockedNavigator = jest.fn();
 const token = '1c-bmjdkc-5e60e084cf8113048ca7';
 
-jest.mock('@edx/frontend-platform/auth');
+jest.mock('@openedx/frontend-base', () => ({
+  ...jest.requireActual('@openedx/frontend-base'),
+  getHttpClient: jest.fn(() => ({
+    post: async () => ({
+      data: {},
+      catch: () => { },
+    }),
+  })),
+}));
+
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom')),
   useNavigate: () => mockedNavigator,
@@ -50,12 +58,7 @@ describe('ResetPasswordPage', () => {
 
   beforeEach(() => {
     store = mockStore(initialState);
-    configure({
-      loggingService: { logError: jest.fn() },
-      config: {
-        ENVIRONMENT: 'production',
-        LANGUAGE_PREFERENCE_COOKIE_NAME: 'yum',
-      },
+    configureI18n({
       messages: { 'es-419': {}, de: {}, 'en-us': {} },
     });
     props = {
@@ -84,15 +87,6 @@ describe('ResetPasswordPage', () => {
         status: TOKEN_STATE.VALID,
       },
     });
-
-    jest.mock('@edx/frontend-platform/auth', () => ({
-      getHttpClient: jest.fn(() => ({
-        post: async () => ({
-          data: {},
-          catch: () => {},
-        }),
-      })),
-    }));
 
     store.dispatch = jest.fn(store.dispatch);
     render(reduxWrapper(<IntlResetPasswordPage {...props} />));
@@ -204,7 +198,7 @@ describe('ResetPasswordPage', () => {
     store.dispatch = jest.fn(store.dispatch);
     props = {
       status:
-      TOKEN_STATE.PENDING,
+        TOKEN_STATE.PENDING,
     };
 
     render(reduxWrapper(<IntlResetPasswordPage {...props} />));
@@ -214,7 +208,7 @@ describe('ResetPasswordPage', () => {
   it('should redirect the user to Reset password email screen ', async () => {
     props = {
       status:
-      PASSWORD_RESET_ERROR,
+        PASSWORD_RESET_ERROR,
     };
     render(reduxWrapper(<IntlResetPasswordPage {...props} />));
     expect(mockedNavigator).toHaveBeenCalledWith(RESET_PAGE);

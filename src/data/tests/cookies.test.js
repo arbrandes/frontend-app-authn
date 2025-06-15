@@ -1,10 +1,11 @@
-import { getConfig } from '@edx/frontend-platform';
+import { getConfig } from '@openedx/frontend-base';
 import Cookies from 'universal-cookie';
 
 import { setCookie } from '../utils';
 
 // Mock getConfig function
-jest.mock('@edx/frontend-platform', () => ({
+jest.mock('@openedx/frontend-base', () => ({
+  ...jest.requireActual('@openedx/frontend-base'),
   getConfig: jest.fn(),
 }));
 
@@ -17,7 +18,7 @@ describe('setCookie function', () => {
   });
 
   it('should set a cookie with default options', () => {
-    getConfig.mockReturnValue({ SESSION_COOKIE_DOMAIN: 'example.com' });
+    getConfig.mockReturnValue({ custom: { SESSION_COOKIE_DOMAIN: 'example.com' } });
 
     setCookie('testCookie', 'testValue');
 
@@ -30,7 +31,7 @@ describe('setCookie function', () => {
   });
 
   it('should set a cookie with specified expiry', () => {
-    getConfig.mockReturnValue({ SESSION_COOKIE_DOMAIN: 'example.com' });
+    getConfig.mockReturnValue({ custom: { SESSION_COOKIE_DOMAIN: 'example.com' } });
 
     const expiry = new Date('2023-12-31');
     setCookie('testCookie', 'testValue', expiry);

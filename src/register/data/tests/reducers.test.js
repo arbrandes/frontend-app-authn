@@ -1,4 +1,4 @@
-import { getConfig } from '@edx/frontend-platform';
+import { getConfig } from '@openedx/frontend-base';
 
 import { DEFAULT_REDIRECT_URL, DEFAULT_STATE, PENDING_STATE } from '../../../data/constants';
 import {
@@ -85,12 +85,13 @@ describe('Registration Reducer Tests', () => {
             type: 'test type', suggestion: 'test suggestion',
           },
         },
-      });
+      }
+    );
   });
 
   it('should set redirect url dashboard on registration success action', () => {
     const payload = {
-      redirectUrl: `${getConfig().BASE_URL}${DEFAULT_REDIRECT_URL}`,
+      redirectUrl: `${getConfig().baseUrl}${DEFAULT_REDIRECT_URL}`,
       success: true,
     };
     const action = {
@@ -245,7 +246,7 @@ describe('Registration Reducer Tests', () => {
   it('should reset email error field data on focus of email field', () => {
     const state = {
       ...defaultState,
-      registrationError: { email: `This email is already associated with an existing or previous ${ getConfig().SITE_NAME } account` },
+      registrationError: { email: `This email is already associated with an existing or previous ${getConfig().siteName} account` },
     };
     const action = {
       type: REGISTRATION_CLEAR_BACKEND_ERROR,

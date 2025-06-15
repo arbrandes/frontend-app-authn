@@ -1,10 +1,8 @@
-import React from 'react';
 import { Provider } from 'react-redux';
 
-import { mergeConfig } from '@edx/frontend-platform';
 import {
-  getLocale, injectIntl, IntlProvider,
-} from '@edx/frontend-platform/i18n';
+  getLocale, injectIntl, IntlProvider, mergeConfig
+} from '@openedx/frontend-base';
 import { fireEvent, render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
@@ -14,12 +12,10 @@ import { FIELDS } from '../../data/constants';
 import RegistrationPage from '../../RegistrationPage';
 import ConfigurableRegistrationForm from '../ConfigurableRegistrationForm';
 
-jest.mock('@edx/frontend-platform/analytics', () => ({
+jest.mock('@openedx/frontend-base', () => ({
+  ...jest.requireActual('@openedx/frontend-base'),
   sendPageEvent: jest.fn(),
   sendTrackEvent: jest.fn(),
-}));
-jest.mock('@edx/frontend-platform/i18n', () => ({
-  ...jest.requireActual('@edx/frontend-platform/i18n'),
   getLocale: jest.fn(),
 }));
 
@@ -45,8 +41,10 @@ jest.mock('react-router-dom', () => {
 
 describe('ConfigurableRegistrationForm', () => {
   mergeConfig({
-    PRIVACY_POLICY: 'https://privacy-policy.com',
-    TOS_AND_HONOR_CODE: 'https://tos-and-honot-code.com',
+    custom: {
+      PRIVACY_POLICY: 'https://privacy-policy.com',
+      TOS_AND_HONOR_CODE: 'https://tos-and-honot-code.com',
+    }
   });
 
   let props = {};
@@ -142,7 +140,9 @@ describe('ConfigurableRegistrationForm', () => {
 
   describe('Test Configurable Fields', () => {
     mergeConfig({
-      ENABLE_DYNAMIC_REGISTRATION_FIELDS: true,
+      custom: {
+        ENABLE_DYNAMIC_REGISTRATION_FIELDS: true,
+      }
     });
 
     it('should render fields returned by backend as field descriptions', () => {
@@ -222,7 +222,9 @@ describe('ConfigurableRegistrationForm', () => {
 
     it('should submit form with fields returned by backend in payload', () => {
       mergeConfig({
-        SHOW_CONFIGURABLE_EDX_FIELDS: true,
+        custom: {
+          SHOW_CONFIGURABLE_EDX_FIELDS: true,
+        }
       });
       getLocale.mockImplementation(() => ('en-us'));
       jest.spyOn(global.Date, 'now').mockImplementation(() => 0);

@@ -1,7 +1,4 @@
-import React from 'react';
-
-import { mergeConfig } from '@edx/frontend-platform';
-import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { IntlProvider, mergeConfig } from '@openedx/frontend-base';
 import { render } from '@testing-library/react';
 import { Context as ResponsiveContext } from 'react-responsive';
 
@@ -29,7 +26,9 @@ describe('Base component tests', () => {
 
   it('renders Image layout when ENABLE_IMAGE_LAYOUT configuration is enabled', () => {
     mergeConfig({
-      ENABLE_IMAGE_LAYOUT: true,
+      custom: {
+        ENABLE_IMAGE_LAYOUT: true,
+      }
     });
 
     const { container } = render(

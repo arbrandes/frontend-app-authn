@@ -1,9 +1,8 @@
-import React from 'react';
 import { Provider } from 'react-redux';
 
-import { getConfig, mergeConfig } from '@edx/frontend-platform';
-import { sendPageEvent, sendTrackEvent } from '@edx/frontend-platform/analytics';
-import { injectIntl, IntlProvider } from '@edx/frontend-platform/i18n';
+import {
+  getConfig, injectIntl, IntlProvider, mergeConfig, sendPageEvent, sendTrackEvent
+} from '@openedx/frontend-base';
 import {
   fireEvent, render, screen, waitFor,
 } from '@testing-library/react';
@@ -16,11 +15,10 @@ import { backupLoginFormBegin, dismissPasswordResetBanner, loginRequest } from '
 import { INTERNAL_SERVER_ERROR } from '../data/constants';
 import LoginPage from '../LoginPage';
 
-jest.mock('@edx/frontend-platform/analytics', () => ({
+jest.mock('@openedx/frontend-base', () => ({
+  ...jest.requireActual('@openedx/frontend-base'),
   sendPageEvent: jest.fn(),
   sendTrackEvent: jest.fn(),
-}));
-jest.mock('@edx/frontend-platform/auth', () => ({
   getAuthService: jest.fn(),
 }));
 
@@ -272,7 +270,7 @@ describe('LoginPage', () => {
     )).toBeDefined();
 
     mergeConfig({
-      DISABLE_ENTERPRISE_LOGIN: '',
+      custom: { DISABLE_ENTERPRISE_LOGIN: '' },
     });
   });
 
@@ -337,7 +335,7 @@ describe('LoginPage', () => {
 
   it('should show sign-in header for institution login if enterprise login is disabled', () => {
     mergeConfig({
-      DISABLE_ENTERPRISE_LOGIN: true,
+      custom: { DISABLE_ENTERPRISE_LOGIN: true },
     });
 
     store = mockStore({
@@ -358,13 +356,13 @@ describe('LoginPage', () => {
     expect(queryByText('Institution/campus credentials')).toBeDefined();
 
     mergeConfig({
-      DISABLE_ENTERPRISE_LOGIN: '',
+      custom: { DISABLE_ENTERPRISE_LOGIN: '' },
     });
   });
 
   it('should show sign-in header with secondary Providers and without Providers', () => {
     mergeConfig({
-      DISABLE_ENTERPRISE_LOGIN: true,
+      custom: { DISABLE_ENTERPRISE_LOGIN: true },
     });
 
     store = mockStore({
@@ -385,7 +383,7 @@ describe('LoginPage', () => {
     expect(queryByText('Institution/campus credentials')).toBeDefined();
 
     mergeConfig({
-      DISABLE_ENTERPRISE_LOGIN: '',
+      custom: { DISABLE_ENTERPRISE_LOGIN: '' },
     });
   });
 
@@ -424,7 +422,7 @@ describe('LoginPage', () => {
     expect(queryByText('Institution/campus credentials')).toBeDefined();
 
     mergeConfig({
-      DISABLE_ENTERPRISE_LOGIN: '',
+      custom: { DISABLE_ENTERPRISE_LOGIN: '' },
     });
   });
 
@@ -432,7 +430,7 @@ describe('LoginPage', () => {
 
   it('should match login internal server error message', () => {
     const expectedMessage = 'We couldn\'t sign you in.'
-                            + 'An error has occurred. Try refreshing the page, or check your internet connection.';
+      + 'An error has occurred. Try refreshing the page, or check your internet connection.';
     store = mockStore({
       ...initialState,
       login: {
@@ -462,8 +460,7 @@ describe('LoginPage', () => {
     });
 
     const expectedMessage = `${'You have successfully signed into Apple, but your Apple account does not have a '
-                            + 'linked '}${ getConfig().SITE_NAME } account. To link your accounts, sign in now using your ${
-                             getConfig().SITE_NAME } password.`;
+      + 'linked '}${getConfig().siteName} account. To link your accounts, sign in now using your ${getConfig().siteName} password.`;
 
     render(reduxWrapper(<IntlLoginPage {...props} />));
     expect(screen.getByText(
@@ -524,7 +521,7 @@ describe('LoginPage', () => {
     });
 
     delete window.location;
-    window.location = { href: getConfig().BASE_URL };
+    window.location = { href: getConfig().baseUrl };
     render(reduxWrapper(<IntlLoginPage {...props} />));
     expect(window.location.href).toBe(dashboardURL);
   });
@@ -550,10 +547,10 @@ describe('LoginPage', () => {
     });
 
     delete window.location;
-    window.location = { href: getConfig().BASE_URL };
+    window.location = { href: getConfig().baseUrl };
 
     render(reduxWrapper(<IntlLoginPage {...props} />));
-    expect(window.location.href).toBe(getConfig().LMS_BASE_URL + authCompleteUrl);
+    expect(window.location.href).toBe(getConfig().lmsBaseUrl + authCompleteUrl);
   });
 
   it('should redirect to social auth provider url on SSO button click', () => {
@@ -569,7 +566,7 @@ describe('LoginPage', () => {
     });
 
     delete window.location;
-    window.location = { href: getConfig().BASE_URL };
+    window.location = { href: getConfig().baseUrl };
 
     render(reduxWrapper(<IntlLoginPage {...props} />));
 
@@ -577,7 +574,7 @@ describe('LoginPage', () => {
       '',
       { selector: '#oa2-apple-id' },
     ));
-    expect(window.location.href).toBe(getConfig().LMS_BASE_URL + ssoProvider.loginUrl);
+    expect(window.location.href).toBe(getConfig().lmsBaseUrl + ssoProvider.loginUrl);
   });
 
   it('should redirect to finishAuthUrl upon successful authentication via SSO', () => {
@@ -598,10 +595,10 @@ describe('LoginPage', () => {
     });
 
     delete window.location;
-    window.location = { href: getConfig().BASE_URL };
+    window.location = { href: getConfig().baseUrl };
 
     render(reduxWrapper(<IntlLoginPage {...props} />));
-    expect(window.location.href).toBe(getConfig().LMS_BASE_URL + finishAuthUrl);
+    expect(window.location.href).toBe(getConfig().lmsBaseUrl + finishAuthUrl);
   });
 
   // ******** test hinted third party auth ********
@@ -620,7 +617,7 @@ describe('LoginPage', () => {
     });
 
     delete window.location;
-    window.location = { href: getConfig().BASE_URL.concat(LOGIN_PAGE), search: `?next=/dashboard&tpa_hint=${ssoProvider.id}` };
+    window.location = { href: getConfig().baseUrl.concat(LOGIN_PAGE), search: `?next=/dashboard&tpa_hint=${ssoProvider.id}` };
 
     render(reduxWrapper(<IntlLoginPage {...props} />));
     expect(screen.getByText(
@@ -647,7 +644,7 @@ describe('LoginPage', () => {
     });
 
     delete window.location;
-    window.location = { href: getConfig().BASE_URL.concat(LOGIN_PAGE), search: `?next=/dashboard&tpa_hint=${ssoProvider.id}` };
+    window.location = { href: getConfig().baseUrl.concat(LOGIN_PAGE), search: `?next=/dashboard&tpa_hint=${ssoProvider.id}` };
 
     const { container } = render(reduxWrapper(<IntlLoginPage {...props} />));
     expect(container.querySelector('.react-loading-skeleton')).toBeTruthy();
@@ -668,11 +665,11 @@ describe('LoginPage', () => {
     });
 
     delete window.location;
-    window.location = { href: getConfig().BASE_URL.concat(LOGIN_PAGE), search: `?next=/dashboard&tpa_hint=${secondaryProviders.id}` };
+    window.location = { href: getConfig().baseUrl.concat(LOGIN_PAGE), search: `?next=/dashboard&tpa_hint=${secondaryProviders.id}` };
     secondaryProviders.iconImage = null;
 
     render(reduxWrapper(<IntlLoginPage {...props} />));
-    expect(window.location.href).toEqual(getConfig().LMS_BASE_URL + secondaryProviders.loginUrl);
+    expect(window.location.href).toEqual(getConfig().lmsBaseUrl + secondaryProviders.loginUrl);
   });
 
   it('should render regular tpa button for invalid tpa_hint value', () => {
@@ -689,13 +686,13 @@ describe('LoginPage', () => {
     });
 
     delete window.location;
-    window.location = { href: getConfig().BASE_URL.concat(LOGIN_PAGE), search: '?next=/dashboard&tpa_hint=invalid' };
+    window.location = { href: getConfig().baseUrl.concat(LOGIN_PAGE), search: '?next=/dashboard&tpa_hint=invalid' };
 
     const { container } = render(reduxWrapper(<IntlLoginPage {...props} />));
     expect(container.querySelector(`#${ssoProvider.id}`).querySelector('#provider-name').textContent).toEqual(`${ssoProvider.name}`);
 
     mergeConfig({
-      DISABLE_ENTERPRISE_LOGIN: '',
+      custom: { DISABLE_ENTERPRISE_LOGIN: '' },
     });
   });
 
@@ -712,8 +709,15 @@ describe('LoginPage', () => {
       },
     });
 
+    mergeConfig({
+      custom: {
+        ALLOW_PUBLIC_ACCOUNT_CREATION: true,
+        SHOW_REGISTRATION_LINKS: true,
+      }
+    });
+
     delete window.location;
-    window.location = { href: getConfig().BASE_URL.concat(LOGIN_PAGE), search: `?tpa_hint=${ssoProvider.id}` };
+    window.location = { href: getConfig().baseUrl.concat(LOGIN_PAGE), search: `?tpa_hint=${ssoProvider.id}` };
 
     render(reduxWrapper(<IntlLoginPage {...props} />));
     expect(screen.getByText(
@@ -723,7 +727,9 @@ describe('LoginPage', () => {
 
   it('should render other ways to sign in button when public account creation is disabled', () => {
     mergeConfig({
-      ALLOW_PUBLIC_ACCOUNT_CREATION: false,
+      custom: {
+        ALLOW_PUBLIC_ACCOUNT_CREATION: false,
+      }
     });
 
     store = mockStore({
@@ -739,7 +745,7 @@ describe('LoginPage', () => {
     });
 
     delete window.location;
-    window.location = { href: getConfig().BASE_URL.concat(LOGIN_PAGE), search: `?tpa_hint=${ssoProvider.id}` };
+    window.location = { href: getConfig().baseUrl.concat(LOGIN_PAGE), search: `?tpa_hint=${ssoProvider.id}` };
 
     render(reduxWrapper(<IntlLoginPage {...props} />));
     expect(screen.getByText(

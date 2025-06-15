@@ -1,7 +1,4 @@
-import React from 'react';
-
-import { mergeConfig } from '@edx/frontend-platform';
-import { injectIntl, IntlProvider } from '@edx/frontend-platform/i18n';
+import { injectIntl, IntlProvider, mergeConfig } from '@openedx/frontend-base';
 import {
   render, screen,
 } from '@testing-library/react';
@@ -14,7 +11,9 @@ const IntlAccountActivationMessage = injectIntl(AccountActivationMessage);
 describe('AccountActivationMessage', () => {
   beforeEach(() => {
     mergeConfig({
-      MARKETING_EMAILS_OPT_IN: '',
+      custom: {
+        MARKETING_EMAILS_OPT_IN: '',
+      }
     });
   });
 
@@ -81,7 +80,9 @@ describe('AccountActivationMessage', () => {
 describe('EmailConfirmationMessage', () => {
   beforeEach(() => {
     mergeConfig({
-      MARKETING_EMAILS_OPT_IN: 'true',
+      custom: {
+        MARKETING_EMAILS_OPT_IN: 'true',
+      }
     });
   });
 

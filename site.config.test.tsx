@@ -1,0 +1,53 @@
+import { EnvironmentTypes, SiteConfig } from '@openedx/frontend-base';
+
+const config: SiteConfig = {
+  apps: [],
+
+  appId: 'openedxAuthn',
+  baseUrl: 'http://localhost:8080',
+  environment: EnvironmentTypes.TEST,
+  lmsBaseUrl: 'http://localhost:18000',
+  loginUrl: 'http://localhost:18000/login',
+  logoutUrl: 'http://localhost:18000/logout',
+  siteName: 'Your Platform Name Here',
+
+  custom: {
+    appId: 'openedxAuthn',
+    MARKETING_SITE_BASE_URL: 'http://localhost:18000',
+    LOGO_URL: 'https://edx-cdn.org/v3/default/logo.svg',
+    LOGO_TRADEMARK_URL: 'https://edx-cdn.org/v3/default/logo-trademark.svg',
+    LOGO_WHITE_URL: 'https://edx-cdn.org/v3/default/logo-white.svg',
+    FAVICON_URL: 'https://edx-cdn.org/v3/default/favicon.ico',
+    SESSION_COOKIE_DOMAIN: 'local.openedx.io',
+    USER_RETENTION_COOKIE_NAME: '',
+    // Features
+    ALLOW_PUBLIC_ACCOUNT_CREATION: false,
+    DISABLE_ENTERPRISE_LOGIN: true,
+    ENABLE_AUTO_GENERATED_USERNAME: false,
+    ENABLE_DYNAMIC_REGISTRATION_FIELDS: false,
+    ENABLE_PROGRESSIVE_PROFILING_ON_AUTHN: false,
+    MARKETING_EMAILS_OPT_IN: '',
+    SHOW_CONFIGURABLE_EDX_FIELDS: false,
+    SHOW_REGISTRATION_LINKS: false,
+    ENABLE_IMAGE_LAYOUT: false,
+    // Links
+    ACTIVATION_EMAIL_SUPPORT_LINK: null,
+    AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK: null,
+    LOGIN_ISSUE_SUPPORT_LINK: null,
+    PASSWORD_RESET_SUPPORT_LINK: null,
+    POST_REGISTRATION_REDIRECT_URL: '',
+    PRIVACY_POLICY: null,
+    SEARCH_CATALOG_URL: null,
+    TOS_AND_HONOR_CODE: null,
+    TOS_LINK: null,
+    // Base container images
+    BANNER_IMAGE_LARGE: '',
+    BANNER_IMAGE_MEDIUM: '',
+    BANNER_IMAGE_SMALL: '',
+    BANNER_IMAGE_EXTRA_SMALL: '',
+    // Miscellaneous
+    INFO_EMAIL: '',
+  }
+};
+
+export default config;

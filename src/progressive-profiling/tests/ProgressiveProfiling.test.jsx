@@ -1,10 +1,15 @@
-import React from 'react';
 import { Provider } from 'react-redux';
 
-import { getConfig, mergeConfig } from '@edx/frontend-platform';
-import { identifyAuthenticatedUser, sendTrackEvent } from '@edx/frontend-platform/analytics';
-import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
-import { configure, injectIntl, IntlProvider } from '@edx/frontend-platform/i18n';
+import {
+  configureI18n,
+  getAuthenticatedUser,
+  getConfig,
+  identifyAuthenticatedUser,
+  injectIntl,
+  IntlProvider,
+  mergeConfig,
+  sendTrackEvent
+} from '@openedx/frontend-base';
 import {
   fireEvent, render, screen,
 } from '@testing-library/react';
@@ -17,7 +22,6 @@ import {
   EMBEDDED,
   FAILURE_STATE,
   PENDING_STATE,
-  RECOMMENDATIONS,
 } from '../../data/constants';
 import { saveUserProfile } from '../data/actions';
 import ProgressiveProfiling from '../ProgressiveProfiling';
@@ -25,16 +29,13 @@ import ProgressiveProfiling from '../ProgressiveProfiling';
 const IntlProgressiveProfilingPage = injectIntl(ProgressiveProfiling);
 const mockStore = configureStore();
 
-jest.mock('@edx/frontend-platform/analytics', () => ({
+jest.mock('@openedx/frontend-base', () => ({
+  ...jest.requireActual('@openedx/frontend-base'),
   sendPageEvent: jest.fn(),
   sendTrackEvent: jest.fn(),
   identifyAuthenticatedUser: jest.fn(),
-}));
-jest.mock('@edx/frontend-platform/auth', () => ({
-  configure: jest.fn(),
+  configureAuth: jest.fn(),
   getAuthenticatedUser: jest.fn(),
-}));
-jest.mock('@edx/frontend-platform/logging', () => ({
   getLoggingService: jest.fn(),
 }));
 jest.mock('react-router-dom', () => {
@@ -57,8 +58,8 @@ jest.mock('react-router-dom', () => {
 describe('ProgressiveProfilingTests', () => {
   let store = {};
 
-  const DASHBOARD_URL = getConfig().LMS_BASE_URL.concat(DEFAULT_REDIRECT_URL);
-  const registrationResult = { redirectUrl: getConfig().LMS_BASE_URL + DEFAULT_REDIRECT_URL, success: true };
+  const DASHBOARD_URL = getConfig().lmsBaseUrl.concat(DEFAULT_REDIRECT_URL);
+  const registrationResult = { redirectUrl: getConfig().lmsBaseUrl + DEFAULT_REDIRECT_URL, success: true };
   const fields = {
     company: { name: 'company', type: 'text', label: 'Company' },
     gender: {
@@ -91,12 +92,7 @@ describe('ProgressiveProfilingTests', () => {
 
   beforeEach(() => {
     store = mockStore(initialState);
-    configure({
-      loggingService: { logError: jest.fn() },
-      config: {
-        ENVIRONMENT: 'production',
-        LANGUAGE_PREFERENCE_COOKIE_NAME: 'yum',
-      },
+    configureI18n({
       messages: { 'es-419': {}, de: {}, 'en-us': {} },
     });
     useLocation.mockReturnValue({
@@ -112,7 +108,9 @@ describe('ProgressiveProfilingTests', () => {
 
   it('should not display button "Learn more about how we use this information."', () => {
     mergeConfig({
-      AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK: '',
+      custom: {
+        AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK: '',
+      }
     });
     const { queryByRole } = render(reduxWrapper(<IntlProgressiveProfilingPage />));
     const button = queryByRole('button', { name: /learn more about how we use this information/i });
@@ -122,7 +120,9 @@ describe('ProgressiveProfilingTests', () => {
 
   it('should display button "Learn more about how we use this information."', () => {
     mergeConfig({
-      AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK: 'http://localhost:1999/support',
+      custom: {
+        AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK: 'http://localhost:1999/support',
+      }
     });
 
     const { getByText } = render(reduxWrapper(<IntlProgressiveProfilingPage />));
@@ -134,7 +134,7 @@ describe('ProgressiveProfilingTests', () => {
 
   it('should open modal on pressing skip for now button', () => {
     delete window.location;
-    window.location = { href: getConfig().BASE_URL.concat(AUTHN_PROGRESSIVE_PROFILING) };
+    window.location = { href: getConfig().baseUrl.concat(AUTHN_PROGRESSIVE_PROFILING) };
     const { getByRole } = render(reduxWrapper(<IntlProgressiveProfilingPage />));
 
     const skipButton = getByRole('button', { name: /skip for now/i });
@@ -158,7 +158,9 @@ describe('ProgressiveProfilingTests', () => {
 
   it('should send analytic event for support link click', () => {
     mergeConfig({
-      AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK: 'http://localhost:1999/support',
+      custom: {
+        AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK: 'http://localhost:1999/support',
+      }
     });
     render(reduxWrapper(<IntlProgressiveProfilingPage />));
 
@@ -177,7 +179,7 @@ describe('ProgressiveProfilingTests', () => {
       host: '',
     };
     delete window.location;
-    window.location = { href: getConfig().BASE_URL.concat(AUTHN_PROGRESSIVE_PROFILING) };
+    window.location = { href: getConfig().baseUrl.concat(AUTHN_PROGRESSIVE_PROFILING) };
     render(reduxWrapper(<IntlProgressiveProfilingPage />));
 
     const nextButton = screen.getByText('Next');
@@ -229,65 +231,18 @@ describe('ProgressiveProfilingTests', () => {
     delete window.location;
     window.location = {
       assign: jest.fn().mockImplementation((value) => { window.location.href = value; }),
-      href: getConfig().BASE_URL,
+      href: getConfig().baseUrl,
     };
 
     render(reduxWrapper(<IntlProgressiveProfilingPage />));
     expect(window.location.href).toEqual(DASHBOARD_URL);
   });
 
-  describe('Recommendations test', () => {
-    window.OnetrustActiveGroups = 'C0003';
-    mergeConfig({
-      ENABLE_POST_REGISTRATION_RECOMMENDATIONS: true,
-    });
-
-    it('should redirect to recommendations page if recommendations are enabled', () => {
-      store = mockStore({
-        ...initialState,
-        welcomePage: {
-          ...initialState.welcomePage,
-          success: true,
-        },
-      });
-      const { container } = render(reduxWrapper(<IntlProgressiveProfilingPage />));
-      const nextButton = container.querySelector('button.btn-brand');
-      expect(nextButton.textContent).toEqual('Next');
-
-      expect(mockNavigate).toHaveBeenCalledWith(RECOMMENDATIONS);
-    });
-
-    it('should not redirect to recommendations page if user is on its way to enroll in a course', async () => {
-      const redirectUrl = `${getConfig().LMS_BASE_URL}${DEFAULT_REDIRECT_URL}?enrollment_action=1`;
-      useLocation.mockReturnValue({
-        state: {
-          registrationResult: {
-            redirectUrl,
-            success: true,
-          },
-          optionalFields,
-        },
-      });
-
-      store = mockStore({
-        ...initialState,
-        welcomePage: {
-          ...initialState.welcomePage,
-          success: true,
-        },
-      });
-
-      const { container } = render(reduxWrapper(<IntlProgressiveProfilingPage />));
-      const nextButton = container.querySelector('button.btn-brand');
-      expect(nextButton.textContent).toEqual('Submit');
-
-      expect(window.location.href).toEqual(redirectUrl);
-    });
-  });
-
   describe('Embedded Form Workflow Test', () => {
     mergeConfig({
-      SEARCH_CATALOG_URL: 'http://localhost/search',
+      custom: {
+        SEARCH_CATALOG_URL: 'http://localhost/search',
+      }
     });
     const host = 'http://example.com';
 
@@ -308,7 +263,7 @@ describe('ProgressiveProfilingTests', () => {
     it('should set host property value embedded host for on ramp experience for skip link event', () => {
       delete window.location;
       window.location = {
-        href: getConfig().BASE_URL.concat(AUTHN_PROGRESSIVE_PROFILING),
+        href: getConfig().baseUrl.concat(AUTHN_PROGRESSIVE_PROFILING),
         search: `?host=${host}&variant=${EMBEDDED}`,
       };
       render(reduxWrapper(<IntlProgressiveProfilingPage />));
@@ -323,7 +278,7 @@ describe('ProgressiveProfilingTests', () => {
       delete window.location;
       window.location = {
         assign: jest.fn().mockImplementation((value) => { window.location.href = value; }),
-        href: getConfig().BASE_URL.concat(AUTHN_PROGRESSIVE_PROFILING),
+        href: getConfig().baseUrl.concat(AUTHN_PROGRESSIVE_PROFILING),
         search: `?host=${host}&variant=${EMBEDDED}`,
       };
 
@@ -352,7 +307,7 @@ describe('ProgressiveProfilingTests', () => {
       };
       delete window.location;
       window.location = {
-        href: getConfig().BASE_URL.concat(AUTHN_PROGRESSIVE_PROFILING),
+        href: getConfig().baseUrl.concat(AUTHN_PROGRESSIVE_PROFILING),
         search: `?host=${host}`,
       };
       render(reduxWrapper(<IntlProgressiveProfilingPage />));
@@ -366,7 +321,7 @@ describe('ProgressiveProfilingTests', () => {
       delete window.location;
       window.location = {
         assign: jest.fn().mockImplementation((value) => { window.location.href = value; }),
-        href: getConfig().BASE_URL,
+        href: getConfig().baseUrl,
         search: `?variant=${EMBEDDED}&host=${host}`,
       };
 
@@ -380,7 +335,7 @@ describe('ProgressiveProfilingTests', () => {
       delete window.location;
       window.location = {
         assign: jest.fn().mockImplementation((value) => { window.location.href = value; }),
-        href: getConfig().BASE_URL,
+        href: getConfig().baseUrl,
         search: `?variant=${EMBEDDED}`,
       };
       store = mockStore({
@@ -400,7 +355,7 @@ describe('ProgressiveProfilingTests', () => {
       delete window.location;
       window.location = {
         assign: jest.fn().mockImplementation((value) => { window.location.href = value; }),
-        href: getConfig().BASE_URL,
+        href: getConfig().baseUrl,
         search: `?variant=${EMBEDDED}&host=${host}&next=${redirectUrl}`,
       };
       store = mockStore({

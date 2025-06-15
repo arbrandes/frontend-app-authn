@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { injectIntl, IntlProvider } from '@edx/frontend-platform/i18n';
+import { injectIntl, IntlProvider } from '@openedx/frontend-base';
 import {
   render, screen,
 } from '@testing-library/react';
@@ -22,7 +20,8 @@ import {
 } from '../data/constants';
 import LoginFailureMessage from '../LoginFailure';
 
-jest.mock('@edx/frontend-platform/auth', () => ({
+jest.mock('@openedx/frontend-base', () => ({
+  ...jest.requireActual('@openedx/frontend-base'),
   getAuthService: jest.fn(),
 }));
 

@@ -1,7 +1,4 @@
-import React from 'react';
-
-import { getConfig } from '@edx/frontend-platform';
-import { injectIntl, IntlProvider } from '@edx/frontend-platform/i18n';
+import { getConfig, injectIntl, IntlProvider } from '@openedx/frontend-base';
 import { fireEvent, render } from '@testing-library/react';
 
 import { TermsOfService } from '../index';
@@ -20,7 +17,7 @@ describe('TermsOfServiceTest', () => {
   });
 
   it('should render error msg if Terms of Service checkbox is not checked', () => {
-    const errorMessage = `You must agree to the ${getConfig().SITE_NAME} Terms of Service`;
+    const errorMessage = `You must agree to the ${getConfig().siteName} Terms of Service`;
     const { container } = render(
       <IntlProvider locale="en">
         <IntlTermsOfService errorMessage={errorMessage} onChangeHandler={changeHandler} />

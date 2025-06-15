@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
-import { getConfig, snakeCaseObject } from '@edx/frontend-platform';
-import { identifyAuthenticatedUser, sendPageEvent, sendTrackEvent } from '@edx/frontend-platform/analytics';
 import {
   AxiosJwtAuthService,
-  configure as configureAuth,
+  configureAuth,
+  getAppConfig,
   getAuthenticatedUser,
-} from '@edx/frontend-platform/auth';
-import { useIntl } from '@edx/frontend-platform/i18n';
-import { getLoggingService } from '@edx/frontend-platform/logging';
+  getConfig,
+  getLoggingService,
+  identifyAuthenticatedUser,
+  sendPageEvent,
+  sendTrackEvent,
+  snakeCaseObject,
+  useIntl
+} from '@openedx/frontend-base';
 import {
   Alert,
   Form,
@@ -22,10 +26,6 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { useLocation } from 'react-router-dom';
 
-import { saveUserProfile } from './data/actions';
-import { welcomePageContextSelector } from './data/selectors';
-import messages from './messages';
-import ProgressiveProfilingPageModal from './ProgressiveProfilingPageModal';
 import BaseContainer from '../base-container';
 import { RedirectLogistration } from '../common-components';
 import { getThirdPartyAuthContext } from '../common-components/data/actions';
@@ -39,6 +39,10 @@ import {
 import isOneTrustFunctionalCookieEnabled from '../data/oneTrust';
 import { getAllPossibleQueryParams, isHostAvailableInQueryParams } from '../data/utils';
 import { FormFieldRenderer } from '../field-renderer';
+import { saveUserProfile } from './data/actions';
+import { welcomePageContextSelector } from './data/selectors';
+import messages from './messages';
+import ProgressiveProfilingPageModal from './ProgressiveProfilingPageModal';
 
 const ProgressiveProfiling = (props) => {
   const { formatMessage } = useIntl();
@@ -55,15 +59,11 @@ const ProgressiveProfiling = (props) => {
   const queryParams = getAllPossibleQueryParams();
   const authenticatedUser = getAuthenticatedUser() || location.state?.authenticatedUser;
   const functionalCookiesConsent = isOneTrustFunctionalCookieEnabled();
-  const enablePostRegistrationRecommendations = (
-    getConfig().ENABLE_POST_REGISTRATION_RECOMMENDATIONS && functionalCookiesConsent
-  );
 
   const [registrationResult, setRegistrationResult] = useState({ redirectUrl: '' });
   const [formFieldData, setFormFieldData] = useState({ fields: {}, extendedProfile: [] });
   const [values, setValues] = useState({});
   const [showModal, setShowModal] = useState(false);
-  const [showRecommendationsPage, setShowRecommendationsPage] = useState(false);
 
   useEffect(() => {
     if (registrationEmbedded) {
@@ -90,7 +90,7 @@ const ProgressiveProfiling = (props) => {
         fields: welcomePageContext.fields,
         extendedProfile: welcomePageContext.extended_profile,
       });
-      const nextUrl = welcomePageContext.nextUrl ? welcomePageContext.nextUrl : getConfig().SEARCH_CATALOG_URL;
+      const nextUrl = welcomePageContext.nextUrl ? welcomePageContext.nextUrl : getAppConfig('openedxAuthn').SEARCH_CATALOG_URL;
       setRegistrationResult({ redirectUrl: nextUrl });
     }
   }, [registrationEmbedded, welcomePageContext]);
@@ -102,36 +102,13 @@ const ProgressiveProfiling = (props) => {
     }
   }, [authenticatedUser]);
 
-  useEffect(() => {
-    if (!enablePostRegistrationRecommendations) {
-      sendTrackEvent(
-        'edx.bi.user.recommendations.not.enabled',
-        { functionalCookiesConsent, page: 'authn_recommendations' },
-      );
-      return;
-    }
-
-    if (registrationResult.redirectUrl && authenticatedUser?.userId) {
-      const redirectQueryParams = getAllPossibleQueryParams(registrationResult.redirectUrl);
-      if (!('enrollment_action' in redirectQueryParams || queryParams?.next)) {
-        setShowRecommendationsPage(true);
-      }
-    }
-  }, [
-    authenticatedUser,
-    enablePostRegistrationRecommendations,
-    functionalCookiesConsent,
-    registrationResult.redirectUrl,
-    queryParams?.next,
-  ]);
-
   if (
     !authenticatedUser
     || !(location.state?.registrationResult || registrationEmbedded)
     || welcomePageContextApiStatus === FAILURE_STATE
     || (welcomePageContextApiStatus === COMPLETE_STATE && !Object.keys(welcomePageContext).includes('fields'))
   ) {
-    const DASHBOARD_URL = getConfig().LMS_BASE_URL.concat(DEFAULT_REDIRECT_URL);
+    const DASHBOARD_URL = getConfig().lmsBaseUrl.concat(DEFAULT_REDIRECT_URL);
     global.location.assign(DASHBOARD_URL);
     return null;
   }
@@ -198,8 +175,10 @@ const ProgressiveProfiling = (props) => {
   return (
     <BaseContainer showWelcomeBanner fullName={authenticatedUser?.fullName || authenticatedUser?.name}>
       <Helmet>
-        <title>{formatMessage(messages['progressive.profiling.page.title'],
-          { siteName: getConfig().SITE_NAME })}
+        <title>{formatMessage(
+          messages['progressive.profiling.page.title'],
+          { siteName: getConfig().siteName }
+        )}
         </title>
       </Helmet>
       <ProgressiveProfilingPageModal isOpen={showModal} redirectUrl={registrationResult.redirectUrl} />
@@ -213,7 +192,6 @@ const ProgressiveProfiling = (props) => {
         <RedirectLogistration
           success
           redirectUrl={registrationResult.redirectUrl}
-          redirectToRecommendationsPage={showRecommendationsPage}
           educationLevel={values?.level_of_education}
           userId={authenticatedUser?.userId}
         />
@@ -234,12 +212,12 @@ const ProgressiveProfiling = (props) => {
             ) : null}
             <Form>
               {formFields}
-              {(getConfig().AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK) && (
+              {(getAppConfig('openedxAuthn').AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK) && (
                 <span className="pp-page__support-link">
                   <Hyperlink
                     isInline
                     variant="muted"
-                    destination={getConfig().AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK}
+                    destination={getAppConfig('openedxAuthn').AUTHN_PROGRESSIVE_PROFILING_SUPPORT_LINK}
                     target="_blank"
                     showLaunchIcon={false}
                     onClick={() => (sendTrackEvent('edx.bi.welcome.page.support.link.clicked'))}
@@ -255,7 +233,7 @@ const ProgressiveProfiling = (props) => {
                   className="pp-page__button-width"
                   state={submitState}
                   labels={{
-                    default: showRecommendationsPage ? formatMessage(messages['optional.fields.next.button']) : formatMessage(messages['optional.fields.submit.button']),
+                    default: formatMessage(messages['optional.fields.submit.button']),
                     pending: '',
                   }}
                   onClick={handleSubmit}

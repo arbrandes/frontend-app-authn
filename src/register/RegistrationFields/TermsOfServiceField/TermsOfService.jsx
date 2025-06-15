@@ -1,7 +1,4 @@
-import React from 'react';
-
-import { getConfig } from '@edx/frontend-platform';
-import { FormattedMessage, useIntl } from '@edx/frontend-platform/i18n';
+import { FormattedMessage, getAppConfig, getConfig, useIntl } from '@openedx/frontend-base';
 import { Form, Hyperlink } from '@openedx/paragon';
 import PropTypes from 'prop-types';
 
@@ -29,9 +26,9 @@ const TermsOfService = (props) => {
           description="Text that appears on registration form stating terms of service.
                        It is a legal document that users must agree to."
           values={{
-            platformName: getConfig().SITE_NAME,
+            platformName: getConfig().siteName,
             termsOfService: (
-              <Hyperlink variant="muted" destination={getConfig().TOS_LINK || '#'} target="_blank">
+              <Hyperlink variant="muted" destination={getAppConfig('openedxAuthn').TOS_LINK || '#'} target="_blank">
                 {formatMessage(messages['terms.of.service'])}
               </Hyperlink>
             ),

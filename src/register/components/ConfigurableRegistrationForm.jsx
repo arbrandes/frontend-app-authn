@@ -1,9 +1,12 @@
-import React, { useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
-import { getConfig } from '@edx/frontend-platform';
-import { getCountryList, getLocale, useIntl } from '@edx/frontend-platform/i18n';
+import {
+  getAppConfig,
+  getConfig, getLocale, useIntl
+} from '@openedx/frontend-base';
 import PropTypes from 'prop-types';
 
+import { getCountryList } from '../../data/countries';
 import { FormFieldRenderer } from '../../field-renderer';
 import { FIELDS } from '../data/constants';
 import messages from '../messages';
@@ -45,9 +48,8 @@ const ConfigurableRegistrationForm = (props) => {
   const formFieldDescriptions = [];
   const honorCode = [];
   const flags = {
-    showConfigurableRegistrationFields: getConfig().ENABLE_DYNAMIC_REGISTRATION_FIELDS,
-    showConfigurableEdxFields: getConfig().SHOW_CONFIGURABLE_EDX_FIELDS,
-    showMarketingEmailOptInCheckbox: getConfig().MARKETING_EMAILS_OPT_IN,
+    showConfigurableRegistrationFields: getAppConfig('openedxAuthn').ENABLE_DYNAMIC_REGISTRATION_FIELDS,
+    showMarketingEmailOptInCheckbox: getAppConfig('openedxAuthn').MARKETING_EMAILS_OPT_IN,
   };
 
   /**
@@ -161,7 +163,7 @@ const ConfigurableRegistrationForm = (props) => {
     });
   }
 
-  if (flags.showConfigurableEdxFields || showCountryField) {
+  if (showCountryField) {
     formFieldDescriptions.push(
       <span key="country">
         <CountryField
@@ -183,7 +185,7 @@ const ConfigurableRegistrationForm = (props) => {
         <FormFieldRenderer
           fieldData={{
             type: 'checkbox',
-            label: formatMessage(messages['registration.opt.in.label'], { siteName: getConfig().SITE_NAME }),
+            label: formatMessage(messages['registration.opt.in.label'], { siteName: getConfig().siteName }),
             name: 'marketingEmailsOptIn',
           }}
           value={formFields.marketingEmailsOptIn}
@@ -196,7 +198,7 @@ const ConfigurableRegistrationForm = (props) => {
     );
   }
 
-  if (flags.showConfigurableEdxFields || showTermsOfServiceAndHonorCode) {
+  if (showTermsOfServiceAndHonorCode) {
     formFieldDescriptions.push(
       <span key="honor_code">
         <HonorCode fieldType="tos_and_honor_code" onChangeHandler={handleOnChange} value={formFields.honor_code} />

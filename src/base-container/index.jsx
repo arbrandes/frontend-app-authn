@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { getConfig } from '@edx/frontend-platform';
+import { getAppConfig } from '@openedx/frontend-base';
 import { breakpoints } from '@openedx/paragon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -13,7 +11,7 @@ import {
 import { AuthLargeLayout, AuthMediumLayout, AuthSmallLayout } from './components/welcome-page-layout';
 
 const BaseContainer = ({ children, showWelcomeBanner, fullName }) => {
-  const enableImageLayout = getConfig().ENABLE_IMAGE_LAYOUT;
+  const enableImageLayout = getAppConfig('openedxAuthn').ENABLE_IMAGE_LAYOUT;
 
   if (enableImageLayout) {
     return (

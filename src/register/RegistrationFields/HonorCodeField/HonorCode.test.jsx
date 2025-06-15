@@ -1,7 +1,6 @@
-import React from 'react';
-
-import { getConfig, mergeConfig } from '@edx/frontend-platform';
-import { injectIntl, IntlProvider } from '@edx/frontend-platform/i18n';
+import {
+  getConfig, injectIntl, IntlProvider, mergeConfig
+} from '@openedx/frontend-base';
 import { render } from '@testing-library/react';
 
 import { HonorCode } from '../index';
@@ -10,10 +9,12 @@ const IntlHonorCode = injectIntl(HonorCode);
 
 describe('HonorCodeTest', () => {
   mergeConfig({
-    PRIVACY_POLICY: 'http://privacy-policy.com',
-    TOS_AND_HONOR_CODE: 'http://tos-and-honot-code.com',
+    custom: {
+      PRIVACY_POLICY: 'http://privacy-policy.com',
+      TOS_AND_HONOR_CODE: 'http://tos-and-honot-code.com',
+    }
   });
-  // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let value = false;
 
   const changeHandler = (e) => {
@@ -25,7 +26,7 @@ describe('HonorCodeTest', () => {
   });
 
   it('should render error msg if honor code is not checked', () => {
-    const errorMessage = `You must agree to the ${getConfig().SITE_NAME} Honor Code`;
+    const errorMessage = `You must agree to the ${getConfig().siteName} Honor Code`;
     const { container } = render(
       <IntlProvider locale="en">
         <IntlHonorCode
@@ -60,8 +61,8 @@ describe('HonorCodeTest', () => {
       </IntlProvider>,
     );
     const expectedMsg = 'By creating an account, you agree to the Terms of Service and Honor Code and you '
-                        + 'acknowledge that Your Platform Name Here and each Member process your personal data in '
-                        + 'accordance with the Privacy Policy.';
+      + 'acknowledge that Your Platform Name Here and each Member process your personal data in '
+      + 'accordance with the Privacy Policy.';
     const honorCodeField = container.querySelector('#honor-code');
     expect(honorCodeField.textContent).toEqual(expectedMsg);
   });
